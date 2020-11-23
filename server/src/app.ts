@@ -4,7 +4,8 @@ import {Config} from './etc/config';
 
 export const app: Application = express();
 
-const dbUrl: string = `mongodb://127.0.0.1:27017/${Config.db.name}`
+// const dbUrl: string = `mongodb://127.0.0.1:27017/${Config.db.name}`
+const dbUrl = `mongodb+srv://${Config.db.user}:${Config.db.password}@timetable-api.xmw9o.mongodb.net/${Config.db.name}?retryWrites=true&w=majority`;
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
