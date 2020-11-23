@@ -9,7 +9,7 @@ const courseSchema = new mongoose.Schema({
     endTime: {type: String, required: false},
     days: {type: Array, required: false},
     rating: {type: Number, required: false},
-    reviews: {type: Array, required: false},
+    reviews: {type: Array, required: false, default: []},
 });
 
 export const Course = mongoose.model('Course', courseSchema);
