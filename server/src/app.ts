@@ -2,6 +2,7 @@ import express, {Application, Request, Response, NextFunction} from 'express';
 import mongoose from 'mongoose';
 import {Config} from './etc/config';
 import bodyParser from 'body-parser';
+import {requestLogger, preventCorsErrors} from "./app.middleware";
 
 export const app: Application = express();
 
@@ -18,17 +19,7 @@ mongoose.connection.on('error', (err) => {
     console.error('Database connection error:', err);
 });
 
-// Extract JSON data from body of requests
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
-
-// Prevent CORS errors
-app.use((req: Request, res: Response, next: NextFunction) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', '*');
-    if (req.method === 'OPTIONS') {
-        res.header('Access-Control-Allow-Methods', 'GET, POST, DELETE');
-        return res.status(200).json({});
-    }
-    next();
-});
+app.use(preventCorsErrors);
+app.use(requestLogger);
