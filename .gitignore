@@ -5,8 +5,10 @@
 .DS_Store
 
 ### Server ###
-# NPM Packages
+# NPM packages
 server/node_modules/
 # Build files
 server/dist/
+# Config file
+server/src/etc/config.ts
 
