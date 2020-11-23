@@ -4,6 +4,9 @@
 ### macOS ###
 .DS_Store
 
-### NPM Packages ###
+### Server ###
+# NPM Packages
 server/node_modules/
+# Build files
+server/dist/
 
