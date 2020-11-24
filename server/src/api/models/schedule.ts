@@ -6,7 +6,7 @@ const scheduleSchema = new mongoose.Schema({
     description: {type: String, required: true},
     isPublic: {type: Boolean, required: true},
     lastModified: {type: Date, required: true},
-    authorId: {type: Number, required: true},
+    authorId: {type: String, required: true},
     size: {type: Number, required: false, default: 0},
     courses: {type: [Course], required: false, default: []},
 });

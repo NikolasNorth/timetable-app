@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import {Review} from './review';
 
 const courseSchema = new mongoose.Schema({
     subject: {type: String, required: true},
@@ -9,7 +10,7 @@ const courseSchema = new mongoose.Schema({
     endTime: {type: String, required: false, default: ''},
     days: {type: Array, required: false, default: []},
     rating: {type: Number, required: false},
-    reviews: {type: Array, required: false, default: []},
+    reviews: {type: [Review], required: false, default: []},
 });
 
 export const Course = mongoose.model('Course', courseSchema);
