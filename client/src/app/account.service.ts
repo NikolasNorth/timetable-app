@@ -4,14 +4,12 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
-export class AccountServiceService {
+export class AccountService {
   httpOptions = {
     headers: new HttpHeaders({'Content-Type': 'application/json'})
   };
 
-  constructor(
-    private httpClient: HttpClient,
-  ) { }
+  constructor(private httpClient: HttpClient) { }
 
   /**
    * Submits a POST request to the /accounts API endpoint to create a new user account.
@@ -23,7 +21,7 @@ export class AccountServiceService {
    *
    * @return void
    */
-  createAccount(name: string, email: string, password: string, confirmPassword: string): void {
+  createAccount(name: string, email: string, password: string): void {
     // TODO
   }
 }
