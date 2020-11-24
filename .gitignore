@@ -4,11 +4,3 @@
 ### macOS ###
 .DS_Store
 
-### Server ###
-# NPM packages
-server/node_modules/
-# Build files
-server/dist/
-# Config file
-server/src/etc/config.ts
-

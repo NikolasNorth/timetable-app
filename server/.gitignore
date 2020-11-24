@@ -1,0 +1,14 @@
+### JetBrains IDE ###
+.idea/
+
+### macOS ###
+.DS_Store
+
+### Server ###
+# NPM Packages
+node_modules/
+# Build files
+dist/
+# Config file
+src/etc/config.ts
+
