@@ -1,4 +1,4 @@
-import express, {Application, Request, Response, NextFunction} from 'express';
+import express, {Application} from 'express';
 import mongoose from 'mongoose';
 import {Config} from './etc/config';
 import bodyParser from 'body-parser';
