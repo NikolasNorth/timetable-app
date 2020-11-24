@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import {Config} from './etc/config';
 import bodyParser from 'body-parser';
 import {requestLogger, preventCorsErrors} from "./app.middleware";
+import {router as accountRouter} from './api/routes/account';
 
 export const app: Application = express();
 
@@ -23,3 +24,4 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(preventCorsErrors);
 app.use(requestLogger);
+app.use('/v1/accounts', accountRouter);
