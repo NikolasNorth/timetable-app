@@ -8,7 +8,7 @@ const courseSchema = new mongoose.Schema({
     classSection: {type: String, required: true},
     startTime: {type: String, required: false, default: ''},
     endTime: {type: String, required: false, default: ''},
-    days: {type: Array, required: false, default: []},
+    days: {type: [String], required: false, default: []},
     rating: {type: Number, required: false},
     reviews: {type: [Review], required: false, default: []},
 });
