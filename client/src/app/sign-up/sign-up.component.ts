@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AccountService} from '../account.service';
+import {Account} from '../@types/account';
 
 @Component({
   selector: 'app-sign-up',
@@ -25,6 +26,11 @@ export class SignUpComponent implements OnInit {
    */
   createAccount(name: string, email: string, password: string, confirmPassword: string): void {
     // TODO
-    this.accountService.createAccount(name, email, password);
+    const account: Object = {
+      name: name,
+      email: email,
+      password: password,
+    };
+    this.accountService.createAccount(account as Account).subscribe();
   }
 }
