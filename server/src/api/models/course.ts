@@ -5,9 +5,9 @@ const courseSchema = new mongoose.Schema({
     code: {type: String, required: true},
     title: {type: String, required: true},
     classSection: {type: String, required: true},
-    startTime: {type: String, required: false},
-    endTime: {type: String, required: false},
-    days: {type: Array, required: false},
+    startTime: {type: String, required: false, default: ''},
+    endTime: {type: String, required: false, default: ''},
+    days: {type: Array, required: false, default: []},
     rating: {type: Number, required: false},
     reviews: {type: Array, required: false, default: []},
 });
