@@ -12,4 +12,17 @@ export class SignUpComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  /**
+   * Creates a new user account.
+   *
+   * @param name
+   * @param email
+   * @param password
+   * @param confirmPassword
+   *
+   * @return void
+   */
+  createAccount(name: string, email: string, password: string, confirmPassword: string): void {
+    // TODO
+  }
 }
