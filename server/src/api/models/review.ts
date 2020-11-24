@@ -1,5 +1,14 @@
 import mongoose from 'mongoose';
 
+export interface IReview extends mongoose.Document {
+    title: string,
+    description: string,
+    authorId: string,
+    dateOfPublish: Date,
+    isVisible: boolean,
+    courseId: string,
+}
+
 const reviewSchema = new mongoose.Schema({
     title: {type: String, required: true},
     description: {type: String, required: true},
@@ -9,4 +18,4 @@ const reviewSchema = new mongoose.Schema({
     courseId: {type: String, required: true},
 });
 
-export const Review = mongoose.model('Review', reviewSchema);
+export const Review = mongoose.model<IReview>('Review', reviewSchema);

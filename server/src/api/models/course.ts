@@ -1,5 +1,17 @@
 import mongoose from 'mongoose';
-import {Review} from './review';
+import {IReview} from './review';
+
+export interface ICourse extends mongoose.Document {
+    subject: string,
+    code: string,
+    title: string,
+    classSection: string,
+    startTime?: string,
+    endTime?: string,
+    days?: string[],
+    rating?: number,
+    reviews?: IReview[],
+}
 
 const courseSchema = new mongoose.Schema({
     subject: {type: String, required: true},
@@ -8,9 +20,9 @@ const courseSchema = new mongoose.Schema({
     classSection: {type: String, required: true},
     startTime: {type: String, required: false, default: ''},
     endTime: {type: String, required: false, default: ''},
-    days: {type: [String], required: false, default: []},
+    days: {type: Array, required: false, default: []},
     rating: {type: Number, required: false},
-    reviews: {type: [Review], required: false, default: []},
+    reviews: {type: Array, required: false, default: []},
 });
 
-export const Course = mongoose.model('Course', courseSchema);
+export const Course = mongoose.model<ICourse>('Course', courseSchema);

@@ -1,5 +1,15 @@
 import mongoose from 'mongoose';
-import {Schedule} from './schedule';
+import {ISchedule} from './schedule';
+
+export interface IAccount extends mongoose.Document {
+    name: string,
+    email: string,
+    password: string,
+    isAdmin: boolean,
+    isActive: boolean,
+    numSchedules?: number,
+    schedules?: ISchedule[],
+}
 
 const accountSchema = new mongoose.Schema({
     name: {type: String, required: true},
@@ -8,7 +18,7 @@ const accountSchema = new mongoose.Schema({
     isAdmin: {type: Boolean, required: true, default: false},
     isActive: {type: Boolean, required: true, default: true},
     numSchedules: {type: Number, required: false, default: 0},
-    schedules: {type: [Schedule], required: false, default: []},
+    schedules: {type: Array, required: false, default: []},
 });
 
-export const Account = mongoose.model('Account', accountSchema);
+export const Account = mongoose.model<IAccount>('Account', accountSchema);
