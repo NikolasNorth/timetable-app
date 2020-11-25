@@ -8,7 +8,6 @@ import {Account} from '../@types/account';
   styleUrls: ['./sign-up.component.scss']
 })
 export class SignUpComponent implements OnInit {
-  verificationMsg: string = 'Verify Email';
   showVerificationMsg: boolean;
 
   constructor(private accountService: AccountService) { }
