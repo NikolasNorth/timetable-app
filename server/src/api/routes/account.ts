@@ -11,7 +11,7 @@ router.post('/', async (req: Request, res: Response) => {
     try {
         const account: IAccount | null = await Account.findOne({email: email}).exec();
         if (account) {
-            res.status(400).json({
+            res.status(409).json({
                 message: `An account has already been created for ${email}.`
             });
         } else {
