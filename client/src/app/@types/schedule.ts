@@ -1,7 +1,7 @@
 import {Course} from './course';
 
 export interface Schedule {
-  id: string,
+  _id: string,
   name: string,
   description: string,
   isPublic: boolean,

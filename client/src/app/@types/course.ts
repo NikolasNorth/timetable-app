@@ -1,7 +1,7 @@
 import {Review} from './review';
 
 export interface Course {
-  id: string,
+  _id: string,
   subject: string,
   code: string,
   title: string,
