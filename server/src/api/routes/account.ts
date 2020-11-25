@@ -3,6 +3,7 @@ import {Account, IAccount} from '../models/account';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 import {Config} from '../../etc/config';
+import {transporter} from '../../app';
 
 export const router = Router();
 
@@ -33,12 +34,36 @@ router.post('/create', async (req: Request, res: Response) => {
                 schedules: [],
             });
             newAccount = await newAccount.save();
-            res.status(201).json(newAccount);
+            jwt.sign(
+                {_id: newAccount._id},
+                Config.jwt.key,
+                {expiresIn: '1h'},
+                (err: Error | null, token: string | undefined) => {
+                    const confirmUrl: string = `${Config.client.hostname}/v1/accounts/confirm/${token}`;
+                    transporter.sendMail({
+                        to: newAccount.email,
+                        subject: 'Confirm Email',
+                        html: `Confirm your email: <a href="${confirmUrl}">${confirmUrl}</a>`,
+                    });
+                }
+            );
+            res.status(201).json({
+                _id: newAccount._id,
+                _isConfirmed: newAccount.isConfirmed,
+            });
         }
     } catch (err) {
         console.error(err);
         res.status(500).json(err);
     }
+});
+
+
+router.get('/confirm/:token', (req: Request, res: Response) => {
+    const token: string = req.params.token;
+    const payload: any = jwt.verify(token, Config.jwt.key);
+    res.redirect(`${Config.client.hostname}/login`, 200);
+    res.status(200).json({message: '200 OK.'});
 });
 
 /**
@@ -61,8 +86,12 @@ router.post('/find', async (req: Request, res: Response) => {
                 res.status(401).json({
                     message: `Invalid email or password for ${email}.`
                 });
+            } else if (!account.isConfirmed) {
+                res.status(401).json({
+                    message: `Account has not been confirmed for ${email}.`
+                });
             } else {
-                const token = jwt.sign(
+                const token: string = jwt.sign(
                     {_id: account._id, email: email},
                     Config.jwt.key,
                     {expiresIn: '1h'}
