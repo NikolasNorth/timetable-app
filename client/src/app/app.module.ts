@@ -8,6 +8,7 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { RequestPasswordResetComponent } from './request-password-reset/request-password-reset.component';
 import { PasswordResetComponent } from './password-reset/password-reset.component';
+import { ConfirmAccountComponent } from './confirm-account/confirm-account.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { PasswordResetComponent } from './password-reset/password-reset.componen
     SignUpComponent,
     SignInComponent,
     RequestPasswordResetComponent,
-    PasswordResetComponent
+    PasswordResetComponent,
+    ConfirmAccountComponent
   ],
   imports: [
     BrowserModule,
