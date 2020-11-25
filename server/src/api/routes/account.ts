@@ -47,7 +47,7 @@ router.post('/create', async (req: Request, res: Response) => {
                     });
                 }
             );
-            res.status(201).json({
+            res.status(202).json({
                 _id: newAccount._id,
                 _isConfirmed: newAccount.isConfirmed,
             });
