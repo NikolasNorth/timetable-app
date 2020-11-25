@@ -27,6 +27,11 @@ export class AccountService {
     return this.httpClient.post<Account>(url, account, this.httpOptions);
   }
 
+  confirmAccount(token: string): Observable<Account> {
+    const url = `${this.hostname}/${this.resource}/confirm/${token}`;
+    return this.httpClient.get<Account>(url);
+  }
+
   /**
    * Submits a POST request to /accounts/find to see if account exists.
    *

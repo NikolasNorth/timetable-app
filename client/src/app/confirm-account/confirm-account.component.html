@@ -1,2 +1,8 @@
-<h1>Thank you, your account is now confirmed!</h1>
-<p>You may now <a>sign in</a>.</p>
+<div *ngIf="showVerificationMsg">
+  <h1>Thank you, your account is now confirmed!</h1>
+  <p>You may now <a routerLink="/signin">sign in</a>.</p>
+</div>
+<div *ngIf="!showVerificationMsg">
+  <h3>Confirming your account...</h3>
+  <p>If this process takes longer than a few minutes, please contact support.</p>
+</div>
