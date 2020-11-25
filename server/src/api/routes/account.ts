@@ -1,6 +1,8 @@
 import {Router, Request, Response} from 'express';
 import {Account, IAccount} from '../models/account';
 import * as bcrypt from 'bcrypt';
+import * as jwt from 'jsonwebtoken';
+import {Config} from '../../etc/config';
 
 export const router = Router();
 
@@ -60,7 +62,12 @@ router.post('/find', async (req: Request, res: Response) => {
                     message: `Invalid email or password for ${email}.`
                 });
             } else {
-                res.status(200).json(account);
+                const token = jwt.sign(
+                    {_id: account._id, email: email},
+                    Config.jwt.key,
+                    {expiresIn: '1h'}
+                )
+                res.status(200).json(token);
             }
         }
     } catch (err) {
