@@ -20,6 +20,7 @@ router.post('/', async (req: Request, res: Response) => {
                 name: name,
                 email: email,
                 password: password,
+                isConfirmed: false,
                 isAdmin: false,
                 isActive: true,
                 numSchedules: 0,

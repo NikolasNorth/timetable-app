@@ -5,6 +5,7 @@ export interface Account {
   name: string,
   email: string,
   password: string,
+  isConfirmed: boolean,
   isAdmin: boolean,
   isActive: boolean,
   numSchedules: number,
