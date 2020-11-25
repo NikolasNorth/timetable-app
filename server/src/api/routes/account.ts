@@ -4,8 +4,12 @@ import * as bcrypt from 'bcrypt';
 
 export const router = Router();
 
-/** POST /v1/accounts */
-router.post('/', async (req: Request, res: Response) => {
+/**
+ * POST /v1/accounts/create
+ *
+ * Create a new user account.
+ */
+router.post('/create', async (req: Request, res: Response) => {
     const name: string = req.body.name;
     const email: string = req.body.email;
     try {
@@ -30,7 +34,37 @@ router.post('/', async (req: Request, res: Response) => {
             res.status(201).json(newAccount);
         }
     } catch (err) {
-        console.error('Caught Error:', err);
+        console.error(err);
         res.status(500).json(err);
     }
 });
+
+/**
+ * POST /v1/accounts/find
+ *
+ * Find a user account.
+ */
+router.post('/find', async (req: Request, res: Response) => {
+    const email: string = req.body.email;
+    const password: string = req.body.password;
+    try {
+        const account: IAccount | null = await Account.findOne({email: email}).exec();
+        if (!account) {
+            res.status(404).json({
+                message: `An account does not exist for ${email}.`
+            });
+        } else {
+            const isValidPassword: boolean = await bcrypt.compare(password, account.password);
+            if (!isValidPassword) {
+                res.status(401).json({
+                    message: `Invalid password for ${email}.`
+                });
+            } else {
+                res.status(200).json(account);
+            }
+        }
+    } catch (err) {
+        console.error(err)
+        res.status(500).json(err);
+    }
+})
