@@ -8,7 +8,6 @@ export const router = Router();
 router.post('/', async (req: Request, res: Response) => {
     const name: string = req.body.name;
     const email: string = req.body.email;
-    const password: string = req.body.password;
     try {
         const account: IAccount | null = await Account.findOne({email: email}).exec();
         if (account) {
@@ -16,6 +15,7 @@ router.post('/', async (req: Request, res: Response) => {
                 message: `An account has already been created for ${email}.`
             });
         } else {
+            const password: string = await bcrypt.hash(req.body.password, 10);
             let newAccount: IAccount = await Account.create({
                 name: name,
                 email: email,
