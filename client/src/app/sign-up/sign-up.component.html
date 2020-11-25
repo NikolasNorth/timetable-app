@@ -1,16 +1,20 @@
+<div *ngIf="showVerificationMsg" class="flash-msg success">
+  <h3>{{verificationMsg}}</h3>
+</div>
 <h1>Western Timetable</h1>
 <h3>Sign Up</h3>
 <div class="signup-form-container">
-  <form>
-    <label for="signup-name-input" class="hidden">Name</label>
-    <input #name type="text" placeholder="Name" id="signup-name-input">
-    <label for="signup-email-input" class="hidden">Email</label>
-    <input #email type="email" placeholder="Email" id="signup-email-input">
-    <label for="signup-password-input" class="hidden">Password</label>
-    <input #password type="password" placeholder="Password" id="signup-password-input">
-    <label for="signup-confirm-password-input" class="hidden">Confirm Password</label>
-    <input #confirmPassword type="password" placeholder="Confirm Password" id="signup-confirm-password-input">
-    <button (click)="signUp(name.value, email.value, password.value, confirmPassword.value)">Sign Up</button>
-  </form>
+  <label for="signup-name-input" class="hidden">Name</label>
+  <input #name type="text" placeholder="Name" id="signup-name-input">
+  <label for="signup-email-input" class="hidden">Email</label>
+  <input #email type="email" placeholder="Email" id="signup-email-input">
+  <label for="signup-password-input" class="hidden">Password</label>
+  <input #password type="password" placeholder="Password" id="signup-password-input">
+  <label for="signup-confirm-password-input" class="hidden">Confirm Password</label>
+  <input #confirmPassword type="password" placeholder="Confirm Password" id="signup-confirm-password-input">
+  <button
+    (click)="signUp(name.value, email.value, password.value, confirmPassword.value);
+    name.value = ''; email.value = ''; password.value = ''; confirmPassword.value = '';"
+  >Sign Up</button>
   <small>Already have an account? <a routerLink="/signin">Sign in.</a></small>
 </div>

@@ -8,10 +8,13 @@ import {Account} from '../@types/account';
   styleUrls: ['./sign-up.component.scss']
 })
 export class SignUpComponent implements OnInit {
+  verificationMsg: string = 'Verify Email';
+  showVerificationMsg: boolean;
 
   constructor(private accountService: AccountService) { }
 
   ngOnInit(): void {
+    this.showVerificationMsg = false;
   }
 
   /**
@@ -30,6 +33,11 @@ export class SignUpComponent implements OnInit {
       email: email,
       password: password,
     };
-    this.accountService.createAccount(account as Account).subscribe();
+    this.accountService.createAccount(account as Account)
+      .subscribe((newAccount: Account) => {
+        if (newAccount) {
+          this.showVerificationMsg = true;
+        }
+      });
   }
 }
