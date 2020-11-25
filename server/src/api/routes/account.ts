@@ -50,14 +50,14 @@ router.post('/find', async (req: Request, res: Response) => {
     try {
         const account: IAccount | null = await Account.findOne({email: email}).exec();
         if (!account) {
-            res.status(404).json({
-                message: `An account does not exist for ${email}.`
+            res.status(401).json({
+                message: `Invalid email or password for ${email}.`
             });
         } else {
             const isValidPassword: boolean = await bcrypt.compare(password, account.password);
             if (!isValidPassword) {
                 res.status(401).json({
-                    message: `Invalid password for ${email}.`
+                    message: `Invalid email or password for ${email}.`
                 });
             } else {
                 res.status(200).json(account);
