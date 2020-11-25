@@ -3,10 +3,10 @@
 <div class="signin-form-container">
   <form>
     <label for="signin-email-input" class="hidden">Email</label>
-    <input type="email" placeholder="Email" id="signin-email-input">
+    <input #email type="email" placeholder="Email" id="signin-email-input">
     <label for="signin-password-input" class="hidden">Password</label>
-    <input type="password" placeholder="Password" id="signin-password-input">
-    <button>Sign In</button>
+    <input #password type="password" placeholder="Password" id="signin-password-input">
+    <button (click)="signIn(email.value, password.value)">Sign In</button>
   </form>
   <small><a routerLink="/request-password-reset">Forgot password?</a></small>
   <small>Don't have an account? <a routerLink="/signup">Sign up.</a></small>

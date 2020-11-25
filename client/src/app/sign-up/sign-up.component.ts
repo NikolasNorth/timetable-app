@@ -24,8 +24,7 @@ export class SignUpComponent implements OnInit {
    *
    * @return void
    */
-  createAccount(name: string, email: string, password: string, confirmPassword: string): void {
-    // TODO
+  signUp(name: string, email: string, password: string, confirmPassword: string): void {
     const account: Object = {
       name: name,
       email: email,

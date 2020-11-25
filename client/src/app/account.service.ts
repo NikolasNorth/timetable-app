@@ -16,15 +16,26 @@ export class AccountService {
   constructor(private httpClient: HttpClient) { }
 
   /**
-   * Submits a POST request to the /accounts API endpoint to create a new user account.
+   * Submits a POST request to the /accounts/create to create a new user account.
    *
    * @param account
    *
-   * @return void
+   * @return Observable<Account>
    */
   createAccount(account: Account): Observable<Account> {
-    // TODO
-    const url = `${this.hostname}/${this.resource}`
+    const url = `${this.hostname}/${this.resource}/create`;
+    return this.httpClient.post<Account>(url, account, this.httpOptions);
+  }
+
+  /**
+   * Submits a POST request to /accounts/find to see if account exists.
+   *
+   * @param account
+   *
+   * @return Observable<Account>
+   */
+  findAccount(account: Account): Observable<Account> {
+    const url = `${this.hostname}/${this.resource}/find`;
     return this.httpClient.post<Account>(url, account, this.httpOptions);
   }
 }
