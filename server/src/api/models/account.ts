@@ -23,7 +23,7 @@ const accountSchema = new mongoose.Schema({
     password: {type: String, required: true},
     isConfirmed: {type: Boolean, required: true, default: false},
     isAdmin: {type: Boolean, required: true, default: false},
-    isActive: {type: Boolean, required: true, default: true},
+    isActive: {type: Boolean, required: true, default: false},
     numSchedules: {type: Number, required: false, default: 0},
     schedules: {type: Array, required: false, default: []},
 });

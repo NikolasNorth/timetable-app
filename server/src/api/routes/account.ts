@@ -29,7 +29,7 @@ router.post('/create', async (req: Request, res: Response) => {
                 password: password,
                 isConfirmed: false,
                 isAdmin: false,
-                isActive: true,
+                isActive: false,
                 numSchedules: 0,
                 schedules: [],
             });
@@ -39,7 +39,7 @@ router.post('/create', async (req: Request, res: Response) => {
                 Config.jwt.key,
                 {expiresIn: '1h'},
                 (err: Error | null, token: string | undefined) => {
-                    const confirmUrl: string = `${Config.client.hostname}/v1/accounts/confirm/${token}`;
+                    const confirmUrl: string = `${Config.client.hostname}/confirm-account/${token}`;
                     transporter.sendMail({
                         to: newAccount.email,
                         subject: 'Confirm Email',
@@ -59,11 +59,29 @@ router.post('/create', async (req: Request, res: Response) => {
 });
 
 
-router.get('/confirm/:token', (req: Request, res: Response) => {
-    const token: string = req.params.token;
-    const payload: any = jwt.verify(token, Config.jwt.key);
-    res.redirect(`${Config.client.hostname}/login`, 200);
-    res.status(200).json({message: '200 OK.'});
+router.get('/confirm/:token', async (req: Request, res: Response) => {
+    const token: string | null = req.params.token;
+    try {
+        const payload: any = jwt.verify(token, Config.jwt.key);
+        const account: IAccount | null = await Account.findOne({_id: payload._id}).exec();
+        if (!account) {
+            res.status(404).json({
+                message: 'Account you are trying to verify does not exist.',
+                isConfirmed: false
+            });
+        } else {
+            account.isConfirmed = true;
+            account.isActive = true;
+            await account.save();
+            res.status(200).json({
+                _id: account._id,
+                isConfirmed: true,
+            });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json(err);
+    }
 });
 
 /**
