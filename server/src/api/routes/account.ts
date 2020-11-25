@@ -1,5 +1,6 @@
 import {Router, Request, Response} from 'express';
 import {Account, IAccount} from '../models/account';
+import * as bcrypt from 'bcrypt';
 
 export const router = Router();
 
