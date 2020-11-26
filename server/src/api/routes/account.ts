@@ -12,7 +12,7 @@ export const router = Router();
  *
  * Create a new user account.
  */
-router.post('/create', async (req: Request, res: Response) => {
+router.post('/signup', async (req: Request, res: Response) => {
     const name: string = req.body.name;
     const email: string = req.body.email;
     try {
@@ -89,25 +89,33 @@ router.get('/confirm/:token', async (req: Request, res: Response) => {
  *
  * Find a user account.
  */
-router.post('/find', async (req: Request, res: Response) => {
+router.post('/signin', async (req: Request, res: Response) => {
     const email: string = req.body.email;
     const password: string = req.body.password;
     try {
         const account: IAccount | null = await Account.findOne({email: email}).exec();
         if (!account) {
             res.status(401).json({
-                message: `Invalid email or password for ${email}.`
+                message: `Invalid email, password, or account has not been confirmed.`,
+                isConfirmed: false,
             });
         } else {
             const isValidPassword: boolean = await bcrypt.compare(password, account.password);
             if (!isValidPassword) {
                 res.status(401).json({
-                    message: `Invalid email or password for ${email}.`
+                    message: `Invalid email, password, or account has not been confirmed.`,
+                    isConfirmed: false,
                 });
             } else if (!account.isConfirmed) {
                 res.status(401).json({
-                    message: `Account has not been confirmed for ${email}.`
+                    message: `Invalid email, password, or account has not been confirmed.`,
+                    isConfirmed: false,
                 });
+            } else if (!account.isActive) {
+                res.status(401).json({
+                    message: `Account has been deactivated.`,
+                    isActive: false,
+                })
             } else {
                 const token: string = jwt.sign(
                     {_id: account._id, email: email},

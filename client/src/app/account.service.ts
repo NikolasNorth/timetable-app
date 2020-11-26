@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Account} from './@types/account';
 import {Observable} from 'rxjs';
+import {catchError} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -16,31 +17,37 @@ export class AccountService {
   constructor(private httpClient: HttpClient) { }
 
   /**
-   * Submits a POST request to the /accounts/create to create a new user account.
+   * Submits a POST request to the /accounts/signup to create a new user account.
    *
    * @param account
    *
    * @return Observable<Account>
    */
-  createAccount(account: Account): Observable<Account> {
-    const url = `${this.hostname}/${this.resource}/create`;
+  signUpAccount(account: Account): Observable<Account> {
+    const url = `${this.hostname}/${this.resource}/signup`;
     return this.httpClient.post<Account>(url, account, this.httpOptions);
   }
 
+  /**
+   * Submits a GET request to /accounts/confirm/:token to confirm a recently
+   * created account.
+   *
+   * @param token
+   */
   confirmAccount(token: string): Observable<Account> {
     const url = `${this.hostname}/${this.resource}/confirm/${token}`;
     return this.httpClient.get<Account>(url);
   }
 
   /**
-   * Submits a POST request to /accounts/find to see if account exists.
+   * Submits a POST request to /accounts/signin to see if account exists.
    *
    * @param account
    *
    * @return Observable<Account>
    */
-  findAccount(account: Account): Observable<Account> {
-    const url = `${this.hostname}/${this.resource}/find`;
+  signInAccount(account: Account): Observable<Account> {
+    const url = `${this.hostname}/${this.resource}/signin`;
     return this.httpClient.post<Account>(url, account, this.httpOptions);
   }
 }

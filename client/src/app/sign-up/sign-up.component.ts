@@ -32,7 +32,7 @@ export class SignUpComponent implements OnInit {
       email: email,
       password: password,
     };
-    this.accountService.createAccount(account as Account)
+    this.accountService.signUpAccount(account as Account)
       .subscribe((newAccount: Account) => {
         if (newAccount) {
           this.showVerificationMsg = true;

@@ -1,15 +1,19 @@
+<div *ngIf="showErrorMsg">
+  <h3>{{errorMsg}}</h3>
+</div>
 <h1>Western Timetable</h1>
 <h3>Sign In</h3>
 <div class="signin-form-container">
-  <form>
-    <label for="signin-email-input" class="hidden">Email</label>
-    <input #email type="email" placeholder="Email" id="signin-email-input">
-    <label for="signin-password-input" class="hidden">Password</label>
-    <input #password type="password" placeholder="Password" id="signin-password-input">
-    <button (click)="signIn(email.value, password.value)">Sign In</button>
-  </form>
-  <small><a routerLink="/request-password-reset">Forgot password?</a></small>
-  <small>Don't have an account? <a routerLink="/signup">Sign up.</a></small>
+<label for="signin-email-input" class="hidden">Email</label>
+<input #email type="email" placeholder="Email" id="signin-email-input">
+<label for="signin-password-input" class="hidden">Password</label>
+<input #password type="password" placeholder="Password" id="signin-password-input">
+<button (click)="
+signIn(email.value, password.value);
+password.value = '';"
+>Sign In</button>
+<small><a routerLink="/request-password-reset">Forgot password?</a></small>
+<small>Don't have an account? <a routerLink="/signup">Sign up.</a></small>
 </div>
 <div>
   <button>Sign in with Google</button>

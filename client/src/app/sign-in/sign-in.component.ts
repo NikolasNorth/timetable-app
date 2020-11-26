@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AccountService} from '../account.service';
 import {Account} from '../@types/account';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-sign-in',
@@ -8,10 +9,13 @@ import {Account} from '../@types/account';
   styleUrls: ['./sign-in.component.scss']
 })
 export class SignInComponent implements OnInit {
+  errorMsg: string;
+  showErrorMsg: boolean;
 
   constructor(private accountService: AccountService) { }
 
   ngOnInit(): void {
+    this.showErrorMsg = false;
   }
 
   /**
@@ -27,6 +31,21 @@ export class SignInComponent implements OnInit {
       email: email,
       password: password,
     };
-    this.accountService.findAccount(account as Account).subscribe();
+    this.accountService.signInAccount(account as Account)
+      .subscribe(
+        (account: Account) => {
+          // TODO: Login successful
+        },
+        (err: HttpErrorResponse) => {
+          if (err.error.isConfirmed === false) {
+            this.errorMsg = 'Invalid email, password, or account has not been confirmed.';
+            this.showErrorMsg = true;
+          } else if (err.error.isActive === false) {
+            this.errorMsg = 'Account has been deactivated. Please contact support.';
+            this.showErrorMsg = true;
+          }
+          console.error(err);
+        }
+      );
   }
 }
