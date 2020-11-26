@@ -5,8 +5,10 @@ import {SignInComponent} from './sign-in/sign-in.component';
 import {RequestPasswordResetComponent} from './request-password-reset/request-password-reset.component';
 import {PasswordResetComponent} from './password-reset/password-reset.component';
 import {ConfirmAccountComponent} from './confirm-account/confirm-account.component';
+import {HomeComponent} from './home/home.component';
 
 const routes: Routes = [
+  {path: '', component: HomeComponent},
   {path: 'signup', component: SignUpComponent},
   {path: 'signin', component: SignInComponent},
   {path: 'request-password-reset', component: RequestPasswordResetComponent},
