@@ -11,4 +11,6 @@ node_modules/
 dist/
 # Config file
 src/etc/config.ts
+# RSA Keypair
+keys/
 
