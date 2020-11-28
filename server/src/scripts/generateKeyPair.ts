@@ -5,8 +5,8 @@ import {
 } from 'crypto';
 import {existsSync, writeFileSync, readFileSync} from 'fs';
 
-const publicKeyPath = `${__dirname}/../keys/id_rsa.pub.pem`;
-const privateKeyPath = `${__dirname}/../keys/id_rsa.pem`;
+const publicKeyPath = `${__dirname}/../../keys/id_rsa.pub.pem`;
+const privateKeyPath = `${__dirname}/../../keys/id_rsa.pem`;
 let _publicKey: string = '';
 let _privateKey: string = '';
 
