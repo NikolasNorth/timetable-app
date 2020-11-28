@@ -37,7 +37,7 @@ router.post('/signup', async (req: Request, res: Response) => {
             utils.sendConfirmationEmail(newAccount);
             res.status(202).json({
                 _id: newAccount._id,
-                _isConfirmed: newAccount.isConfirmed,
+                _isConfirmed: false,
             });
         }
     } catch (err) {
