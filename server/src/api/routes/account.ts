@@ -3,7 +3,7 @@ import {Account, IAccount} from '../models/account';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 import {Config} from '../../etc/config';
-import {transporter} from '../../app';
+import * as utils from '../../lib/utils';
 
 export const router = Router();
 
@@ -34,19 +34,7 @@ router.post('/signup', async (req: Request, res: Response) => {
                 schedules: [],
             });
             newAccount = await newAccount.save();
-            jwt.sign(
-                {_id: newAccount._id},
-                Config.jwt.key,
-                {expiresIn: '1h'},
-                (err: Error | null, token: string | undefined) => {
-                    const confirmUrl: string = `${Config.client.hostname}/confirm-account/${token}`;
-                    transporter.sendMail({
-                        to: newAccount.email,
-                        subject: 'Confirm Email',
-                        html: `Confirm your email: <a href="${confirmUrl}">${confirmUrl}</a>`,
-                    });
-                }
-            );
+            utils.sendConfirmationEmail(newAccount);
             res.status(202).json({
                 _id: newAccount._id,
                 _isConfirmed: newAccount.isConfirmed,
@@ -62,7 +50,7 @@ router.post('/signup', async (req: Request, res: Response) => {
 router.get('/confirm/:token', async (req: Request, res: Response) => {
     const token: string | null = req.params.token;
     try {
-        const payload: any = jwt.verify(token, Config.jwt.key);
+        const payload: any = jwt.verify(token, Config.jwt.PUBLIC_KEY);
         const account: IAccount | null = await Account.findOne({_id: payload._id}).exec();
         if (!account) {
             res.status(404).json({
@@ -119,7 +107,7 @@ router.post('/signin', async (req: Request, res: Response) => {
             } else {
                 const token: string = jwt.sign(
                     {_id: account._id, email: email},
-                    Config.jwt.key,
+                    Config.jwt.PRIVATE_KEY,
                     {expiresIn: '1h'}
                 )
                 res.status(200).json(token);
