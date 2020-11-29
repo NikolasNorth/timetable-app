@@ -26,8 +26,8 @@ export class ConfirmAccountComponent implements OnInit {
 
   confirmAccount(token: string): void {
     this.accountService.confirmAccount(token)
-      .subscribe((account: Account) => {
-        if (account.isConfirmed) {
+      .subscribe((res: any) => {
+        if (res.success) {
           this.showVerificationMsg = true;
         }
       });

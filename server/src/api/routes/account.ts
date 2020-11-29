@@ -89,33 +89,32 @@ router.post('/signin', async (req: Request, res: Response) => {
         const account: IAccount | null = await Account.findOne({email: email}).exec();
         if (!account) {
             res.status(401).json({
+                success: false,
                 message: `Invalid email, password, or account has not been confirmed.`,
-                isConfirmed: false,
             });
         } else {
             const isValidPassword: boolean = await bcrypt.compare(password, account.password);
             if (!isValidPassword) {
                 res.status(401).json({
+                    success: false,
                     message: `Invalid email, password, or account has not been confirmed.`,
-                    isConfirmed: false,
                 });
             } else if (!account.isConfirmed) {
                 res.status(401).json({
+                    success: false,
                     message: `Invalid email, password, or account has not been confirmed.`,
-                    isConfirmed: false,
                 });
             } else if (!account.isActive) {
                 res.status(401).json({
+                    success: false,
                     message: `Account has been deactivated.`,
-                    isActive: false,
                 })
             } else {
-                const token: string = jwt.sign(
-                    {_id: account._id, email: email},
-                    Config.jwt.PRIVATE_KEY,
-                    {expiresIn: '1h'}
-                )
-                res.status(200).json(token);
+                const token: string = utils.issueJwt(account);
+                res.status(200).json({
+                    success: true,
+                    token: token,
+                });
             }
         }
     } catch (err) {
