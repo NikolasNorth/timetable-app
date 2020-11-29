@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AccountService} from '../account.service';
 import {ActivatedRoute} from '@angular/router';
-import {Account} from '../@types/account';
 
 @Component({
   selector: 'app-confirm-account',
@@ -27,9 +26,7 @@ export class ConfirmAccountComponent implements OnInit {
   confirmAccount(token: string): void {
     this.accountService.confirmAccount(token)
       .subscribe((res: any) => {
-        if (res.success) {
-          this.showVerificationMsg = true;
-        }
+        if (res.success) this.showVerificationMsg = true;
       });
   }
 }
