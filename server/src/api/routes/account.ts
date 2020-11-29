@@ -51,11 +51,16 @@ router.get('/confirm/:token', async (req: Request, res: Response) => {
     const token: string | null = req.params.token;
     try {
         const payload: any = jwt.verify(token, Config.jwt.PUBLIC_KEY);
-        const account: IAccount | null = await Account.findOne({_id: payload._id}).exec();
+        const account: IAccount | null = await Account.findOne({_id: payload.sub}).exec();
         if (!account) {
             res.status(404).json({
                 message: 'Account you are trying to verify does not exist.',
                 isConfirmed: false
+            });
+        } else if (payload.exp < Date.now()) {
+            res.status(401).json({
+                message: 'JSON Web Token has expired.',
+                isConfirmed: false,
             });
         } else {
             account.isConfirmed = true;
