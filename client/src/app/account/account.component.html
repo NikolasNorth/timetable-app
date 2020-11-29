@@ -1,1 +1,6 @@
-<p>account works!</p>
+<div *ngIf="showErrorMsg">
+  <h3>You must <a routerLink="/signin">sign in</a> to access this route.</h3>
+</div>
+<div *ngIf="showMsg">
+  <h3>{{msg}}</h3>
+</div>

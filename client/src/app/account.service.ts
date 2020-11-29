@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Account} from './@types/account';
 import {Observable} from 'rxjs';
+import {AuthService} from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -48,5 +49,14 @@ export class AccountService {
   signInAccount(account: Account): Observable<Account> {
     const url = `${this.hostname}/${this.resource}/signin`;
     return this.httpClient.post<Account>(url, account, this.httpOptions);
+  }
+
+  accessProtectedRoute(): Observable<any> {
+    const url = `${this.hostname}/${this.resource}/protected`;
+    const token: string = localStorage.getItem('timetable-token');
+    const options = {
+      headers: new HttpHeaders({'Authorization': `Bearer ${token}`})
+    };
+    return this.httpClient.get<any>(url, options);
   }
 }
