@@ -1,6 +1,6 @@
+import {Config} from './etc/config';
 import {createServer, Server} from 'http';
 import {app} from './app';
-import {Config} from './etc/config';
 
 const server: Server = createServer(app);
 

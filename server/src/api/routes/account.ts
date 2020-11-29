@@ -1,9 +1,10 @@
-import {Router, Request, Response} from 'express';
+import {Router, Request, Response, json} from 'express';
 import {Account, IAccount} from '../models/account';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 import {Config} from '../../etc/config';
 import * as utils from '../../lib/utils';
+import {authenticate} from 'passport';
 
 export const router = Router();
 
@@ -46,7 +47,11 @@ router.post('/signup', async (req: Request, res: Response) => {
     }
 });
 
-
+/**
+ * GET /v1/accounts/confirm/:token
+ *
+ * Verifies a user jwt token and confirms the account if it is valid.
+ */
 router.get('/confirm/:token', async (req: Request, res: Response) => {
     const token: string | null = req.params.token;
     try {
@@ -122,3 +127,12 @@ router.post('/signin', async (req: Request, res: Response) => {
         res.status(500).json(err);
     }
 })
+
+/** Generic protected route for testing */
+router.get('/protected', authenticate('jwt', {session: false}),
+    ((req: Request, res: Response) => {
+        res.status(200).json({
+            success: true,
+            message: 'Welcome!',
+        });
+    }))

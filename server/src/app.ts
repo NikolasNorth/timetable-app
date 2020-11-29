@@ -1,10 +1,12 @@
+import {Config} from './etc/config';
 import express, {Application} from 'express';
 import mongoose from 'mongoose';
-import {Config} from './etc/config';
 import bodyParser from 'body-parser';
 import {requestLogger, preventCorsErrors} from "./app.middleware";
 import {router as accountRouter} from './api/routes/account';
 import * as nodemailer from 'nodemailer';
+import passport from 'passport';
+import {initializePassport} from './config/passport';
 
 export const app: Application = express();
 export const transporter = nodemailer.createTransport({
@@ -30,6 +32,8 @@ mongoose.connection.on('error', (err) => {
     console.error('Database connection error:', err);
 });
 
+initializePassport(passport);
+app.use(passport.initialize());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(preventCorsErrors);
