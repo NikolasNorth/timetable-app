@@ -11,6 +11,7 @@ import { PasswordResetComponent } from './password-reset/password-reset.componen
 import { ConfirmAccountComponent } from './confirm-account/confirm-account.component';
 import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './header/header.component';
+import { AccountComponent } from './account/account.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { HeaderComponent } from './header/header.component';
     ConfirmAccountComponent,
     HomeComponent,
     HeaderComponent,
+    AccountComponent,
   ],
   imports: [
     BrowserModule,

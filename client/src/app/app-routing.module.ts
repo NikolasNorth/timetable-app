@@ -6,6 +6,7 @@ import {RequestPasswordResetComponent} from './request-password-reset/request-pa
 import {PasswordResetComponent} from './password-reset/password-reset.component';
 import {ConfirmAccountComponent} from './confirm-account/confirm-account.component';
 import {HomeComponent} from './home/home.component';
+import {AccountComponent} from './account/account.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -14,6 +15,7 @@ const routes: Routes = [
   {path: 'request-password-reset', component: RequestPasswordResetComponent},
   {path: 'password-reset', component: PasswordResetComponent},
   {path: 'confirm-account/:token', component: ConfirmAccountComponent},
+  {path: 'account', component: AccountComponent},
 ]
 
 @NgModule({
