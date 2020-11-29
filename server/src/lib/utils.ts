@@ -29,6 +29,10 @@ export const sendConfirmationEmail = (user: IAccount): void => {
 
 /** Extract exp claim from JSON web token */
 export const getJwtExpiration = (token: string): number => {
-    const payload: any = verify(token, Config.jwt.PUBLIC_KEY);
-    return payload.exp;
+    try {
+        const payload: any = verify(token, Config.jwt.PUBLIC_KEY);
+        return payload.exp;
+    } catch (err) {
+        throw err;
+    }
 }
