@@ -1,6 +1,6 @@
 import {Config} from '../etc/config';
 import {IAccount} from '../api/models/account';
-import {SignOptions, sign} from 'jsonwebtoken';
+import {SignOptions, sign, verify} from 'jsonwebtoken';
 import {transporter} from '../app';
 
 /** Generate a JSON Web Token */
@@ -25,4 +25,10 @@ export const sendConfirmationEmail = (user: IAccount): void => {
         subject: 'Confirm Email',
         html: `Confirm your email: <a href="${confirmUrl}">${confirmUrl}</a>`,
     });
+}
+
+/** Extract exp claim from JSON web token */
+export const getJwtExpiration = (token: string): number => {
+    const payload: any = verify(token, Config.jwt.PUBLIC_KEY);
+    return payload.exp;
 }

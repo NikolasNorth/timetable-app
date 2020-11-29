@@ -59,22 +59,19 @@ router.get('/confirm/:token', async (req: Request, res: Response) => {
         const account: IAccount | null = await Account.findOne({_id: payload.sub}).exec();
         if (!account) {
             res.status(404).json({
+                success: false,
                 message: 'Account you are trying to verify does not exist.',
-                isConfirmed: false
             });
         } else if (payload.exp < Date.now()) {
             res.status(401).json({
+                success: false,
                 message: 'JSON Web Token has expired.',
-                isConfirmed: false,
             });
         } else {
             account.isConfirmed = true;
             account.isActive = true;
             await account.save();
-            res.status(200).json({
-                _id: account._id,
-                isConfirmed: true,
-            });
+            res.status(200).json({success: true});
         }
     } catch (err) {
         console.error(err);
@@ -119,6 +116,7 @@ router.post('/signin', async (req: Request, res: Response) => {
                 res.status(200).json({
                     success: true,
                     token: token,
+                    exp: utils.getJwtExpiration(token),
                 });
             }
         }
