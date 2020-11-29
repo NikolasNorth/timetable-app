@@ -37,13 +37,8 @@ export class SignInComponent implements OnInit {
           // TODO: Login successful
         },
         (err: HttpErrorResponse) => {
-          if (err.error.isConfirmed === false) {
-            this.errorMsg = 'Invalid email, password, or account has not been confirmed.';
-            this.showErrorMsg = true;
-          } else if (err.error.isActive === false) {
-            this.errorMsg = 'Account has been deactivated. Please contact support.';
-            this.showErrorMsg = true;
-          }
+          this.errorMsg = err.error.message;
+          this.showErrorMsg = true;
           console.error(err);
         }
       );
