@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AccountService} from '../account.service';
 import {Account} from '../@types/account';
 import {HttpErrorResponse} from '@angular/common/http';
+import {AuthService} from '../auth.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -12,7 +13,10 @@ export class SignInComponent implements OnInit {
   errorMsg: string;
   showErrorMsg: boolean;
 
-  constructor(private accountService: AccountService) { }
+  constructor(
+    private accountService: AccountService,
+    private authService: AuthService,
+  ) { }
 
   ngOnInit(): void {
     this.showErrorMsg = false;
@@ -33,13 +37,16 @@ export class SignInComponent implements OnInit {
     };
     this.accountService.signInAccount(account as Account)
       .subscribe(
-        (account: Account) => {
-          // TODO: Login successful
+        (res: any) => {
+          this.authService.addToLocalStorage(res);
         },
         (err: HttpErrorResponse) => {
           this.errorMsg = err.error.message;
           this.showErrorMsg = true;
           console.error(err);
+        },
+        () => {
+          // TODO: Navigate to account page
         }
       );
   }
