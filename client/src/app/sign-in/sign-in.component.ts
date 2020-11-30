@@ -3,6 +3,7 @@ import {AccountService} from '../account.service';
 import {Account} from '../@types/account';
 import {HttpErrorResponse} from '@angular/common/http';
 import {AuthService} from '../auth.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-sign-in',
@@ -16,6 +17,7 @@ export class SignInComponent implements OnInit {
   constructor(
     private accountService: AccountService,
     private authService: AuthService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -46,7 +48,7 @@ export class SignInComponent implements OnInit {
           console.error(err);
         },
         () => {
-          // TODO: Navigate to account page
+          this.router.navigate(['account']);
         }
       );
   }
