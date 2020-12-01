@@ -56,11 +56,11 @@ router.get('/confirm/:token', async (req: Request, res: Response) => {
     const token: string | null = req.params.token;
     try {
         const payload: any = jwt.verify(token, Config.jwt.PUBLIC_KEY);
-        const account: IAccount | null = await Account.findOne({_id: payload.sub}).exec();
+        const account: IAccount | null = await Account.findById(payload.sub).exec();
         if (!account) {
             res.status(404).json({
                 success: false,
-                message: 'Account you are trying to verify does not exist.',
+                message: 'Account does not exist.',
             });
         } else if (payload.exp < Date.now()) {
             res.status(401).json({
@@ -170,6 +170,39 @@ router.post('/request-password-reset', async (req: Request, res: Response) => {
     }
 })
 
-router.post('/password-reset/:token', (req: Request, res: Response) => {
-    // TODO
+router.post('/password-reset', async (req: Request, res: Response) => {
+    const id: string = req.body.sub;
+    const token: string = req.body.token;
+    try {
+        let account: IAccount | null = await Account.findById(id).exec();
+        if (!account) {
+            res.status(404).json({
+                success: false,
+                message: 'Account does not exist.',
+            });
+        } else {
+            const payload: any = jwt.verify(token, account.password);
+            account = await Account.findById(payload.sub).exec();
+            if (!account) {
+                res.status(404).json({
+                    success: false,
+                    message: 'Account does not exist.',
+                });
+            } else {
+                account.password = await bcrypt.hash(req.body.password, 10);
+                await account.save();
+                res.status(200).json({
+                    sub: account._id,
+                    success: true,
+                    message: 'Password reset successfully.',
+                });
+            }
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            success: false,
+            message: 'Internal server error.',
+        });
+    }
 })

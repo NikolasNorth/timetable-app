@@ -68,7 +68,7 @@ export const sendPasswordResetEmail = (account: IAccount): void => {
         expiresIn: '1d',
     };
     const token: string = sign(payload, account.password, options);
-    const url: string = `${Config.client.hostname}/password-reset/${token}`;
+    const url: string = `${Config.client.hostname}/password-reset/${account._id}/${token}`;
     transporter.sendMail({
         to: account.email,
         subject: 'Reset Password',

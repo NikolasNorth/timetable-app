@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import {AccountService} from '../account.service';
 
 @Component({
@@ -8,27 +8,38 @@ import {AccountService} from '../account.service';
   styleUrls: ['./password-reset.component.scss']
 })
 export class PasswordResetComponent implements OnInit {
+  private accountId: string;
+  private jwt: string;
+  errorMsg: string;
+  showErrorMsg: boolean;
 
   constructor(
     private accountService: AccountService,
     private activatedRoute: ActivatedRoute,
-  ) { }
-
-  ngOnInit(): void {
-    const token: string | null = this.activatedRoute.snapshot.paramMap.get('token');
-    if (token) {
-      this.resetPassword(token);
-    }
+    private router: Router,
+  ) {
   }
 
-  resetPassword(token: string): void {
-    this.accountService.resetPassword(token).subscribe(
-      (res: any) => {
-        //
-      },
-      (err: any) => {
-        //
-      }
-    );
+  ngOnInit(): void {
+    this.accountId = this.activatedRoute.snapshot.paramMap.get('id');
+    this.jwt = this.activatedRoute.snapshot.paramMap.get('token');
+    this.errorMsg = '';
+    this.showErrorMsg = false;
+  }
+
+  resetPassword(password: string, confirmPassword: string): void {
+    if (password !== confirmPassword) {
+      // TODO
+    } else {
+      this.accountService.resetPassword(password, this.accountId, this.jwt).subscribe(
+        (res: any) => {
+          this.router.navigate(['signin']);
+        },
+        (err: any) => {
+          this.errorMsg = err.error.message;
+          this.showErrorMsg = true;
+        }
+      );
+    }
   }
 }

@@ -55,9 +55,14 @@ export class AccountService {
     return this.httpClient.post<any>(url, account, this.httpOptions);
   }
 
-  resetPassword(token: string): Observable<any> {
-    const url: string = `${this.hostname}/${this.resource}/password-reset/${token}`;
-    return this.httpClient.get<any>(url);
+  resetPassword(password: string, id: string, jwt: string): Observable<any> {
+    const reqBody: any = {
+      sub: id,
+      password: password,
+      token: jwt,
+    };
+    const url: string = `${this.hostname}/${this.resource}/password-reset`;
+    return this.httpClient.post<any>(url, reqBody, this.httpOptions);
   }
 
   accessProtectedRoute(): Observable<any> {

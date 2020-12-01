@@ -20,7 +20,6 @@ export class RequestPasswordResetComponent implements OnInit {
   }
 
   requestPasswordReset(email: string): void {
-    this.showMsg = true;
     const account: any = {email: email};
     this.accountService.requestPasswordReset(account as Account).subscribe(
       (res: any) => {
@@ -30,6 +29,9 @@ export class RequestPasswordResetComponent implements OnInit {
       },
       (err: HttpErrorResponse) => {
         this.msg = err.error.message;
+      },
+      () => {
+        this.showMsg = true;
       }
     )
   }
