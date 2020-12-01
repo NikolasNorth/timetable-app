@@ -73,4 +73,13 @@ export class AccountService {
     };
     return this.httpClient.get<any>(url, options);
   }
+
+  getAccount(id: string): Observable<Account> {
+    const url: string = `${this.hostname}/${this.resource}/${id}`;
+    const token: string = localStorage.getItem('timetable-token');
+    const options = {
+      headers: new HttpHeaders({'Authorization': `Bearer ${token}`})
+    };
+    return this.httpClient.get<Account>(url, options);
+  }
 }

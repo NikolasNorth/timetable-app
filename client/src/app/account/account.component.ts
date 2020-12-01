@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {AccountService} from '../account.service';
 import {HttpErrorResponse} from '@angular/common/http';
+import {ActivatedRoute} from '@angular/router';
+import {Account} from '../@types/account';
 
 @Component({
   selector: 'app-account',
@@ -9,20 +11,19 @@ import {HttpErrorResponse} from '@angular/common/http';
 })
 export class AccountComponent implements OnInit {
   showErrorMsg: boolean
-  showMsg: boolean;
-  msg: string;
+  account: Account;
 
-  constructor(private accountService: AccountService) { }
+  constructor(
+    private accountService: AccountService,
+    private activatedRoute: ActivatedRoute,
+    ) { }
 
   ngOnInit(): void {
+    const id: string | null = this.activatedRoute.snapshot.paramMap.get('id');
     this.showErrorMsg = false;
-    this.showMsg = false;
-    this.accountService.accessProtectedRoute().subscribe(
-      (res: any) => {
-        if (res.success) {
-          this.showMsg = true;
-          this.msg = res.message;
-        }
+    this.accountService.getAccount(id).subscribe(
+      (res: Account) => {
+        this.account = res;
       },
       (err: HttpErrorResponse) => {
         this.showErrorMsg = true;
