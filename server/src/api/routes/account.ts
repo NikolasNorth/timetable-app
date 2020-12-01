@@ -1,4 +1,4 @@
-import {Router, Request, Response, json} from 'express';
+import {Router, Request, Response} from 'express';
 import {Account, IAccount} from '../models/account';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
@@ -124,13 +124,31 @@ router.post('/signin', async (req: Request, res: Response) => {
         console.error(err)
         res.status(500).json(err);
     }
-})
+});
+
+/** Redirect user to sign in via Google */
+router.get('/signin/google', authenticate('google', {scope: ['profile', 'email']}));
+
+/** Redirect user after they signed in via Google */
+router.get('/signin/google/redirect', authenticate('google', {
+        failureRedirect: '/signin',
+        session: false
+    }),
+    (req: Request, res: Response) => {
+        const account: any = req.user;
+        const token: string = utils.issueJwt(account);
+        res.status(200).json({
+            success: true,
+            token: token,
+            exp: utils.getJwtExpiration(token),
+        });
+    });
 
 /** Generic protected route for testing */
 router.get('/protected', authenticate('jwt', {session: false}),
-    ((req: Request, res: Response) => {
+    (req: Request, res: Response) => {
         res.status(200).json({
             success: true,
             message: 'Welcome!',
         });
-    }))
+    });

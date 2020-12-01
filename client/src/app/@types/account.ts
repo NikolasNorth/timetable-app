@@ -10,4 +10,5 @@ export interface Account {
   isActive: boolean,
   numSchedules: number,
   schedules: Schedule[],
+  googleId?: string,
 }

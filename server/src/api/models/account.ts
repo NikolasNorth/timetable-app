@@ -10,6 +10,7 @@ export interface IAccount extends mongoose.Document {
     isActive: boolean,
     numSchedules?: number,
     schedules?: ISchedule[],
+    googleId?: number,
 }
 
 const accountSchema = new mongoose.Schema({
@@ -26,6 +27,7 @@ const accountSchema = new mongoose.Schema({
     isActive: {type: Boolean, required: true, default: false},
     numSchedules: {type: Number, required: false, default: 0},
     schedules: {type: Array, required: false, default: []},
+    googleId: {type: Number, required: false},
 });
 
 export const Account = mongoose.model<IAccount>('Account', accountSchema);

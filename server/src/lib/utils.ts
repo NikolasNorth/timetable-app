@@ -4,9 +4,9 @@ import {SignOptions, sign, verify} from 'jsonwebtoken';
 import {transporter} from '../app';
 
 /** Generate a JSON Web Token */
-export const issueJwt = (user: IAccount): string => {
+export const issueJwt = (account: IAccount): string => {
     const payload: any = {
-        sub: user._id,
+        sub: account._id,
         iat: Date.now(),
     };
     const options: SignOptions = {
@@ -17,13 +17,13 @@ export const issueJwt = (user: IAccount): string => {
 }
 
 /** Send confirmation email to account. */
-export const sendConfirmationEmail = (user: IAccount): void => {
-    const token: string = issueJwt(user);
-    const confirmUrl: string = `${Config.client.hostname}/confirm-account/${token}`;
+export const sendConfirmationEmail = (account: IAccount): void => {
+    const token: string = issueJwt(account);
+    const url: string = `${Config.client.hostname}/confirm-account/${token}`;
     transporter.sendMail({
-        to: user.email,
+        to: account.email,
         subject: 'Confirm Email',
-        html: `Confirm your email: <a href="${confirmUrl}">${confirmUrl}</a>`,
+        html: `Confirm your email: <a href="${url}">${url}</a>`,
     });
 }
 
@@ -35,4 +35,26 @@ export const getJwtExpiration = (token: string): number => {
     } catch (err) {
         throw err;
     }
+}
+
+/** Send email with password to account */
+export const sendPasswordEmail = (account: IAccount, password: string): void => {
+    const url = `${Config.client.hostname}/reset-password`
+    transporter.sendMail({
+        to: account.email,
+        subject: 'Account Password',
+        html: `
+        <p>Here is your randomly generated password:</p>
+        <code>${password}</code>
+        <p><a href="${url}">Click here</a> if you wish to change the password.</p>
+        `
+    });
+}
+
+/** Generates a random plain-text password */
+export const generateRandomPassword = (length: number): string => {
+    const alphaNumericChars: string = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    return Array(length).fill(alphaNumericChars).map((x) => {
+        return x[Math.floor(Math.random() * x.length)]
+    }).join('');
 }
