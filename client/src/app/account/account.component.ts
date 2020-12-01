@@ -24,6 +24,7 @@ export class AccountComponent implements OnInit {
     this.accountService.getAccount(id).subscribe(
       (res: Account) => {
         this.account = res;
+        console.log(this.account);
       },
       (err: HttpErrorResponse) => {
         this.showErrorMsg = true;

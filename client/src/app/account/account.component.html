@@ -4,8 +4,8 @@
 <div *ngIf="account">
   <div class="account-info">
     <h2>Account Information</h2>
-    <h4>Name: {{account.name}}</h4>
-    <h4>Email: {{account.email}}</h4>
+    <p><b>Name:</b> {{account.name}}</p>
+    <p><b>Email:</b> {{account.email}}</p>
     <a routerLink="/request-password-reset">Change Password</a>
   </div>
   <div class="account-schedules-list">
