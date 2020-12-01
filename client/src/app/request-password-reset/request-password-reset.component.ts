@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {AccountService} from '../account.service';
 import {Account} from '../@types/account';
 import {HttpErrorResponse} from '@angular/common/http';
+import {AuthService} from '../auth.service';
 
 @Component({
   selector: 'app-request-password-reset',
@@ -12,7 +12,7 @@ export class RequestPasswordResetComponent implements OnInit {
   showMsg: boolean;
   msg: string;
 
-  constructor(private accountService: AccountService) { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
     this.showMsg = false;
@@ -21,16 +21,15 @@ export class RequestPasswordResetComponent implements OnInit {
 
   requestPasswordReset(email: string): void {
     const account: any = {email: email};
-    this.accountService.requestPasswordReset(account as Account).subscribe(
+    this.authService.requestPasswordReset(account as Account).subscribe(
       (res: any) => {
         if (res.success) {
           this.msg = res.message;
+          this.showMsg = true;
         }
       },
       (err: HttpErrorResponse) => {
         this.msg = err.error.message;
-      },
-      () => {
         this.showMsg = true;
       }
     )

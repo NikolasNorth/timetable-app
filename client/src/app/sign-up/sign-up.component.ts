@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {AccountService} from '../account.service';
 import {Account} from '../@types/account';
+import {AuthService} from '../auth.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -10,7 +10,7 @@ import {Account} from '../@types/account';
 export class SignUpComponent implements OnInit {
   showVerificationMsg: boolean;
 
-  constructor(private accountService: AccountService) { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
     this.showVerificationMsg = false;
@@ -32,7 +32,7 @@ export class SignUpComponent implements OnInit {
       email: email,
       password: password,
     };
-    this.accountService.signUpAccount(account as Account)
+    this.authService.signUpAccount(account as Account)
       .subscribe((newAccount: Account) => {
         if (newAccount) {
           this.showVerificationMsg = true;

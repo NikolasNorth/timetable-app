@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {AccountService} from '../account.service';
 import {Account} from '../@types/account';
 import {HttpErrorResponse} from '@angular/common/http';
 import {AuthService} from '../auth.service';
@@ -15,7 +14,6 @@ export class SignInComponent implements OnInit {
   showErrorMsg: boolean;
 
   constructor(
-    private accountService: AccountService,
     private authService: AuthService,
     private router: Router,
   ) { }
@@ -37,7 +35,7 @@ export class SignInComponent implements OnInit {
       email: email,
       password: password,
     };
-    this.accountService.signInAccount(account as Account)
+    this.authService.signInAccount(account as Account)
       .subscribe(
         (res: any) => {
           this.authService.addToLocalStorage(res);
@@ -48,7 +46,7 @@ export class SignInComponent implements OnInit {
           console.error(err);
         },
         () => {
-          this.router.navigate(['account']);
+          // this.router.navigate(['account']);
         }
       );
   }

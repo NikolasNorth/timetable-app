@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {AccountService} from '../account.service';
+import {AuthService} from '../auth.service';
 
 @Component({
   selector: 'app-password-reset',
@@ -14,7 +14,7 @@ export class PasswordResetComponent implements OnInit {
   showErrorMsg: boolean;
 
   constructor(
-    private accountService: AccountService,
+    private authService: AuthService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
   ) {
@@ -31,7 +31,7 @@ export class PasswordResetComponent implements OnInit {
     if (password !== confirmPassword) {
       // TODO
     } else {
-      this.accountService.resetPassword(password, this.accountId, this.jwt).subscribe(
+      this.authService.resetPassword(password, this.accountId, this.jwt).subscribe(
         (res: any) => {
           this.router.navigate(['signin']);
         },
