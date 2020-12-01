@@ -152,3 +152,24 @@ router.get('/protected', authenticate('jwt', {session: false}),
             message: 'Welcome!',
         });
     });
+
+router.post('/request-password-reset', async (req: Request, res: Response) => {
+    const email: string = req.body.email;
+    const account: IAccount | null = await Account.findOne({email: email}).exec();
+    if (!account) {
+        res.status(404).json({
+            success: false,
+            message: 'There is no account associated with this email.',
+        });
+    } else {
+        utils.sendPasswordResetEmail(account);
+        res.status(202).json({
+            success: true,
+            message: 'Check email for a link to reset password.',
+        });
+    }
+})
+
+router.post('/password-reset/:token', (req: Request, res: Response) => {
+    // TODO
+})

@@ -23,7 +23,7 @@ export const sendConfirmationEmail = (account: IAccount): void => {
     transporter.sendMail({
         to: account.email,
         subject: 'Confirm Email',
-        html: `Confirm your email: <a href="${url}">${url}</a>`,
+        html: `To confirm your email: <a href="${url}">click here</a>`,
     });
 }
 
@@ -39,7 +39,7 @@ export const getJwtExpiration = (token: string): number => {
 
 /** Send email with password to account */
 export const sendPasswordEmail = (account: IAccount, password: string): void => {
-    const url = `${Config.client.hostname}/reset-password`
+    const url: string = `${Config.client.hostname}/password-reset`
     transporter.sendMail({
         to: account.email,
         subject: 'Account Password',
@@ -57,4 +57,24 @@ export const generateRandomPassword = (length: number): string => {
     return Array(length).fill(alphaNumericChars).map((x) => {
         return x[Math.floor(Math.random() * x.length)]
     }).join('');
+}
+
+export const sendPasswordResetEmail = (account: IAccount): void => {
+    const payload: any = {
+        sub: account._id,
+        iat: Date.now(),
+    };
+    const options: SignOptions = {
+        expiresIn: '1d',
+    };
+    const token: string = sign(payload, account.password, options);
+    const url: string = `${Config.client.hostname}/password-reset/${token}`;
+    transporter.sendMail({
+        to: account.email,
+        subject: 'Reset Password',
+        html: `
+        <p>To reset your password <a href="${url}">click here</a>.</p>
+        <p>If you did not make this request, then you can ignore this message and your password will remain the same.</p>
+        `
+    });
 }

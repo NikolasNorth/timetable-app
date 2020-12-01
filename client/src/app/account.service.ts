@@ -23,7 +23,7 @@ export class AccountService {
    * @return Observable<Account>
    */
   signUpAccount(account: Account): Observable<Account> {
-    const url = `${this.hostname}/${this.resource}/signup`;
+    const url: string = `${this.hostname}/${this.resource}/signup`;
     return this.httpClient.post<Account>(url, account, this.httpOptions);
   }
 
@@ -34,7 +34,7 @@ export class AccountService {
    * @param token
    */
   confirmAccount(token: string): Observable<Account> {
-    const url = `${this.hostname}/${this.resource}/confirm/${token}`;
+    const url: string = `${this.hostname}/${this.resource}/confirm/${token}`;
     return this.httpClient.get<Account>(url);
   }
 
@@ -46,12 +46,22 @@ export class AccountService {
    * @return Observable<Account>
    */
   signInAccount(account: Account): Observable<Account> {
-    const url = `${this.hostname}/${this.resource}/signin`;
+    const url: string = `${this.hostname}/${this.resource}/signin`;
     return this.httpClient.post<Account>(url, account, this.httpOptions);
   }
 
+  requestPasswordReset(account: Account): Observable<any> {
+    const url: string = `${this.hostname}/${this.resource}/request-password-reset`;
+    return this.httpClient.post<any>(url, account, this.httpOptions);
+  }
+
+  resetPassword(token: string): Observable<any> {
+    const url: string = `${this.hostname}/${this.resource}/password-reset/${token}`;
+    return this.httpClient.get<any>(url);
+  }
+
   accessProtectedRoute(): Observable<any> {
-    const url = `${this.hostname}/${this.resource}/protected`;
+    const url: string = `${this.hostname}/${this.resource}/protected`;
     const token: string = localStorage.getItem('timetable-token');
     const options = {
       headers: new HttpHeaders({'Authorization': `Bearer ${token}`})
