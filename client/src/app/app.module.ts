@@ -13,6 +13,7 @@ import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './header/header.component';
 import { AccountComponent } from './account/account.component';
 import { ExploreCoursesComponent } from './explore-courses/explore-courses.component';
+import { ExploreSchedulesComponent } from './explore-schedules/explore-schedules.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { ExploreCoursesComponent } from './explore-courses/explore-courses.compo
     HeaderComponent,
     AccountComponent,
     ExploreCoursesComponent,
+    ExploreSchedulesComponent,
   ],
   imports: [
     BrowserModule,

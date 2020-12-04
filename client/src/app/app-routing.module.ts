@@ -8,6 +8,7 @@ import {ConfirmAccountComponent} from './confirm-account/confirm-account.compone
 import {HomeComponent} from './home/home.component';
 import {AccountComponent} from './account/account.component';
 import {ExploreCoursesComponent} from './explore-courses/explore-courses.component';
+import {ExploreSchedulesComponent} from './explore-schedules/explore-schedules.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -18,6 +19,7 @@ const routes: Routes = [
   {path: 'confirm-account/:token', component: ConfirmAccountComponent},
   {path: 'account/:id', component: AccountComponent},
   {path: 'explore-courses', component: ExploreCoursesComponent},
+  {path: 'explore-schedules', component: ExploreSchedulesComponent},
 ]
 
 @NgModule({
