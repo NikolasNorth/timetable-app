@@ -1,1 +1,28 @@
-<p>explore-courses works!</p>
+<h1>Explore Courses</h1>
+<h2>Search</h2>
+<div class="course-search-container">
+  <label for="input-course-title">Course Title</label>
+  <input #courseTitle type="text" id="input-course-title">
+  <label for="select-course-subject">Subject</label>
+  <select #courseSubject name="subject" id="select-course-subject">
+    <option value="sbj1">Subject 1</option>
+  </select>
+  <label for="input-course-code">Course Code</label>
+  <input #courseCode type="text" id="input-course-code">
+  <label for="input-course-component">Component</label>
+  <input #courseComponent type="text" id="input-course-component">
+  <button (click)=
+            "searchCourses(courseTitle.value, courseSubject.value, courseCode.value, courseComponent.value);
+            courseTitle.value = ''; courseSubject.value = ''; courseCode.value = ''; courseComponent.value = '';"
+  >Search</button>
+  <button>Clear</button>
+</div>
+<div *ngIf="results" class="course-results-container">
+  <h2>Results</h2>
+  <ul>
+    <li *ngFor="let course of results">
+      {{course.subject}} {{course.code}} {{course.title}}<br>
+      {{course.classSection}} {{course.startTime}} {{course.endTime}}
+    </li>
+  </ul>
+</div>
