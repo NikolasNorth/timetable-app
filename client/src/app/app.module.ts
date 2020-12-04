@@ -12,7 +12,7 @@ import { ConfirmAccountComponent } from './confirm-account/confirm-account.compo
 import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './header/header.component';
 import { AccountComponent } from './account/account.component';
-import { CoursesComponent } from './courses/courses.component';
+import { ExploreCoursesComponent } from './explore-courses/explore-courses.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +25,7 @@ import { CoursesComponent } from './courses/courses.component';
     HomeComponent,
     HeaderComponent,
     AccountComponent,
-    CoursesComponent,
+    ExploreCoursesComponent,
   ],
   imports: [
     BrowserModule,
