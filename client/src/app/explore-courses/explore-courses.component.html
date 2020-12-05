@@ -13,7 +13,7 @@
   <input #courseComponent type="text" id="input-course-component">
   <button (click)=
             "searchCourses(courseTitle.value, courseSubject.value, courseCode.value, courseComponent.value);
-            courseTitle.value = ''; courseSubject.value = ''; courseCode.value = ''; courseComponent.value = '';"
+            courseTitle.value = ''; courseSubject.value = subjects[0]; courseCode.value = ''; courseComponent.value = '';"
   >Search</button>
   <button>Clear</button>
 </div>

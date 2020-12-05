@@ -10,7 +10,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 })
 export class ExploreCoursesComponent implements OnInit {
   results: Course[];
-  subjects: string[];
+  subjects: string[] = ['Select Subject'];
 
   constructor(private courseService: CourseService) { }
 
@@ -18,16 +18,17 @@ export class ExploreCoursesComponent implements OnInit {
     this.results = [];
     this.courseService.getSubjects().subscribe(
       (subjects: string[]) => {
-        this.subjects = subjects;
+        this.subjects = [].concat(this.subjects, subjects);
       },
       (err: HttpErrorResponse) => {
         console.error(err);
       }
-    )
+    );
   }
 
   searchCourses(title: string, subject: string, code: string, component: string): void {
     title = title.replace(/\s/g, '+');
+    if (subject === 'Select Subject') subject = undefined;
     this.courseService.searchCourses(title, subject, code, component).subscribe(
       (courses: Course[]) => {
         if (courses) this.results = courses;
