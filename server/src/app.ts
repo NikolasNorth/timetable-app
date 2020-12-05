@@ -8,7 +8,7 @@ import {router as authRouter} from './api/routes/auth';
 import * as nodemailer from 'nodemailer';
 import passport from 'passport';
 import {initializePassport} from './config/passport';
-import {importCourses} from './import';
+import {importCourses} from './scripts/import';
 
 export const app: Application = express();
 export const transporter = nodemailer.createTransport({

@@ -1,4 +1,4 @@
-import {Course, ICourse} from './api/models/course';
+import {Course, ICourse} from '../api/models/course';
 
 export const importCourses = (): void => {
     console.log('Running import...')
