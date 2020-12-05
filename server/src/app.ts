@@ -1,6 +1,6 @@
 import {Config} from './etc/config';
 import express, {Application} from 'express';
-import mongoose from 'mongoose';
+import mongoose, {ConnectionOptions} from 'mongoose';
 import bodyParser from 'body-parser';
 import {requestLogger, preventCorsErrors} from "./app.middleware";
 import {router as accountRouter} from './api/routes/account';
@@ -8,6 +8,7 @@ import {router as authRouter} from './api/routes/auth';
 import * as nodemailer from 'nodemailer';
 import passport from 'passport';
 import {initializePassport} from './config/passport';
+import {importCourses} from './import';
 
 export const app: Application = express();
 export const transporter = nodemailer.createTransport({
@@ -22,14 +23,14 @@ export const transporter = nodemailer.createTransport({
 
 const dbUrl: string = `mongodb://127.0.0.1:27017/${Config.db.name}`
 // const dbUrl = `mongodb+srv://${Config.db.user}:${Config.db.password}@timetable-api.xmw9o.mongodb.net/${Config.db.name}?retryWrites=true&w=majority`;
-mongoose.connect(dbUrl, {
+const dbOptions: ConnectionOptions = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-});
-mongoose.connection.once('open', (_) => {
+}
+mongoose.connect(dbUrl, dbOptions).then((_) => {
     console.log('Database connected:', dbUrl);
-});
-mongoose.connection.on('error', (err) => {
+    if (Config.db.performImport) importCourses();
+}).catch((err) => {
     console.error('Database connection error:', err);
 });
 
