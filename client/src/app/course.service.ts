@@ -23,7 +23,6 @@ export class CourseService {
     if (component) url += `component=${component}&`
     if (url.slice(-1) === '&') url = url.slice(0, -1);
     if (url.slice(-1) === '?') url = url.slice(0, -1);
-    console.log(url);
     return this.httpClient.get<Course[]>(url);
   }
 }
