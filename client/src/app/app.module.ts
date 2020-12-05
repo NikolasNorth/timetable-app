@@ -15,6 +15,7 @@ import { AccountComponent } from './account/account.component';
 import { ExploreCoursesComponent } from './explore-courses/explore-courses.component';
 import { ExploreSchedulesComponent } from './explore-schedules/explore-schedules.component';
 import { Err404Component } from './errors/err404/err404.component';
+import { CreateScheduleComponent } from './create-schedule/create-schedule.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { Err404Component } from './errors/err404/err404.component';
     ExploreCoursesComponent,
     ExploreSchedulesComponent,
     Err404Component,
+    CreateScheduleComponent,
   ],
   imports: [
     BrowserModule,

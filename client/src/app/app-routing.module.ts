@@ -10,10 +10,10 @@ import {AccountComponent} from './account/account.component';
 import {ExploreCoursesComponent} from './explore-courses/explore-courses.component';
 import {ExploreSchedulesComponent} from './explore-schedules/explore-schedules.component';
 import {Err404Component} from './errors/err404/err404.component';
+import {CreateScheduleComponent} from './create-schedule/create-schedule.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
-  {path: '**', component: Err404Component},
   {path: 'signup', component: SignUpComponent},
   {path: 'signin', component: SignInComponent},
   {path: 'request-password-reset', component: RequestPasswordResetComponent},
@@ -22,6 +22,8 @@ const routes: Routes = [
   {path: 'account/:id', component: AccountComponent},
   {path: 'explore-courses', component: ExploreCoursesComponent},
   {path: 'explore-schedules', component: ExploreSchedulesComponent},
+  {path: 'create-schedule', component: CreateScheduleComponent},
+  {path: '**', component: Err404Component},
 ]
 
 @NgModule({
