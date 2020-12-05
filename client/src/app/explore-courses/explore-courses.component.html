@@ -5,7 +5,7 @@
   <input #courseTitle type="text" id="input-course-title">
   <label for="select-course-subject">Subject</label>
   <select #courseSubject name="subject" id="select-course-subject">
-    <option value="SE">SE</option>
+    <option *ngFor="let subject of subjects" [value]="subject">{{subject}}</option>
   </select>
   <label for="input-course-code">Course Code</label>
   <input #courseCode type="text" id="input-course-code">
@@ -22,7 +22,7 @@
   <ul>
     <li *ngFor="let course of results">
       {{course.subject}} {{course.code}} {{course.title}}<br>
-      {{course.classSection}} {{course.startTime}} {{course.endTime}}
+      {{course.classSection}} {{course.startTime}}-{{course.endTime}}
     </li>
   </ul>
 </div>

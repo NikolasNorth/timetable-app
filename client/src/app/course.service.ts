@@ -25,4 +25,9 @@ export class CourseService {
     if (url.slice(-1) === '?') url = url.slice(0, -1);
     return this.httpClient.get<Course[]>(url);
   }
+
+  getSubjects(): Observable<string[]> {
+    let url: string = `${this.hostname}/${this.resource}/subjects`;
+    return this.httpClient.get<string[]>(url);
+  }
 }

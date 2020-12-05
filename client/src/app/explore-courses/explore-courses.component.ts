@@ -10,11 +10,20 @@ import {HttpErrorResponse} from '@angular/common/http';
 })
 export class ExploreCoursesComponent implements OnInit {
   results: Course[];
+  subjects: string[];
 
   constructor(private courseService: CourseService) { }
 
   ngOnInit(): void {
     this.results = [];
+    this.courseService.getSubjects().subscribe(
+      (subjects: string[]) => {
+        this.subjects = subjects;
+      },
+      (err: HttpErrorResponse) => {
+        console.error(err);
+      }
+    )
   }
 
   searchCourses(title: string, subject: string, code: string, component: string): void {

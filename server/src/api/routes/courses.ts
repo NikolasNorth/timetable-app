@@ -10,8 +10,18 @@ router.get('/', async (req: Request, res: Response) => {
         if (req.query.subject) query.subject = req.query.subject;
         if (req.query.code) query.code = req.query.code;
         if (req.query.component) query.component = req.query.component;
-        const results: ICourse[] = await Course.find(query);
+        const results: ICourse[] = await Course.find(query).exec();
         res.status(200).json(results);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json(err);
+    }
+});
+
+router.get('/subjects', async (req: Request, res: Response) => {
+    try {
+        const courses: string[] = await Course.find({}).distinct('subject').exec();
+        res.status(200).json(courses);
     } catch (err) {
         console.error(err);
         res.status(500).json(err);
