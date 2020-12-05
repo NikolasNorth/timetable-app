@@ -10,10 +10,17 @@ import {Account} from '../@types/account';
 export class CreateScheduleComponent implements OnInit {
   showErrorMsg: boolean;
   account: Account;
+  visibility: string;
 
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
-    this.showErrorMsg = !this.authService.isLoggedIn();
+    this.showErrorMsg = false;
+    this.visibility = 'private';
+  }
+
+  createSchedule(visibility: string, name: string, desc: string): void {
+    const isPrivate: boolean = visibility === 'private';
+    console.log(isPrivate, name, desc);
   }
 }

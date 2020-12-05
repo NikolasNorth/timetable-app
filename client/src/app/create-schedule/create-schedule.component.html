@@ -2,5 +2,17 @@
   <h3>You must <a routerLink="/signin">sign in</a> to access this page.</h3>
 </div>
 <div *ngIf="!showErrorMsg">
-  <h1>Build Schedule</h1>
+  <div class="create-schedule-container">
+    <h1>Build Schedule</h1>
+    <p>Visibility</p>
+    <label for="schedule-visibility-private">Private</label>
+    <input [(ngModel)]="visibility" type="radio" id="schedule-visibility-private" name="visibility" value="private" checked>
+    <label for="schedule-visibility-public">Public</label>
+    <input [(ngModel)]="visibility" type="radio" id="schedule-visibility-public" name="visibility" value="public">
+    <label for="schedule-name">Name</label>
+    <input #name type="text" id="schedule-name">
+    <label for="schedule-description">Description</label>
+    <textarea #description name="description" id="schedule-description"></textarea>
+    <button (click)="createSchedule(visibility, name.value, description.value)">Create Schedule</button>
+  </div>
 </div>
