@@ -1,1 +1,6 @@
-<p>create-schedule works!</p>
+<div *ngIf="showErrorMsg">
+  <h3>You must <a routerLink="/signin">sign in</a> to access this page.</h3>
+</div>
+<div *ngIf="!showErrorMsg">
+  <h1>Build Schedule</h1>
+</div>

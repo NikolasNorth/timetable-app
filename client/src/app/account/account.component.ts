@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AccountService} from '../account.service';
 import {HttpErrorResponse} from '@angular/common/http';
-import {ActivatedRoute} from '@angular/router';
 import {Account} from '../@types/account';
 
 @Component({
@@ -13,21 +12,22 @@ export class AccountComponent implements OnInit {
   showErrorMsg: boolean
   account: Account;
 
-  constructor(
-    private accountService: AccountService,
-    private activatedRoute: ActivatedRoute,
-    ) { }
+  constructor(private accountService: AccountService) { }
 
   ngOnInit(): void {
-    const id: string | null = this.activatedRoute.snapshot.paramMap.get('id');
-    this.showErrorMsg = false;
-    this.accountService.getAccount(id).subscribe(
-      (res: Account) => {
-        this.account = res;
-      },
-      (err: HttpErrorResponse) => {
-        this.showErrorMsg = true;
-      }
-    )
+    const id: string | null = localStorage.getItem('timetable-id');
+    if (!id) {
+      this.showErrorMsg = true;
+    } else {
+      this.accountService.getAccount(id).subscribe(
+        (res: Account) => {
+          this.showErrorMsg = false;
+          this.account = res;
+        },
+        (err: HttpErrorResponse) => {
+          this.showErrorMsg = true;
+        }
+      )
+    }
   }
 }

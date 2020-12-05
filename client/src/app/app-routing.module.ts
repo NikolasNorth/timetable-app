@@ -19,7 +19,7 @@ const routes: Routes = [
   {path: 'request-password-reset', component: RequestPasswordResetComponent},
   {path: 'password-reset/:id/:token', component: PasswordResetComponent},
   {path: 'confirm-account/:token', component: ConfirmAccountComponent},
-  {path: 'account/:id', component: AccountComponent},
+  {path: 'account', component: AccountComponent},
   {path: 'explore-courses', component: ExploreCoursesComponent},
   {path: 'explore-schedules', component: ExploreSchedulesComponent},
   {path: 'create-schedule', component: CreateScheduleComponent},

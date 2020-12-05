@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthService} from '../auth.service';
+import {Account} from '../@types/account';
 
 @Component({
   selector: 'app-create-schedule',
@@ -6,10 +8,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./create-schedule.component.scss']
 })
 export class CreateScheduleComponent implements OnInit {
+  showErrorMsg: boolean;
+  account: Account;
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
+    this.showErrorMsg = !this.authService.isLoggedIn();
   }
-
 }

@@ -1,5 +1,5 @@
 <div *ngIf="showErrorMsg">
-  <h3>You must <a routerLink="/signin">sign in</a> to access this route.</h3>
+  <h3>You must <a routerLink="/signin">sign in</a> to access this page.</h3>
 </div>
 <div *ngIf="account">
   <div class="account-info">
@@ -9,6 +9,6 @@
     <a routerLink="/request-password-reset">Change Password</a>
   </div>
   <div class="account-schedules-list">
-    <h2>My Schedules ({{account.numSchedules}}) | </h2><a>Create New</a>
+    <h2>My Schedules ({{account.numSchedules}}) | </h2><a routerLink="/create-schedule">Create New</a>
   </div>
 </div>
