@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Course} from '../@types/course';
+import {CourseService} from '../course.service';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-explore-courses',
@@ -9,25 +11,21 @@ import {Course} from '../@types/course';
 export class ExploreCoursesComponent implements OnInit {
   results: Course[];
 
-  constructor() { }
+  constructor(private courseService: CourseService) { }
 
   ngOnInit(): void {
+    this.results = [];
   }
 
   searchCourses(title: string, subject: string, code: string, component: string): void {
-    const course: Course = {
-      _id: "1",
-      subject: subject,
-      code: code,
-      title: title,
-      classSection: "001",
-      startTime: "12:00 PM",
-      endTime: "1:00 PM",
-      days: [],
-      rating: 5.0,
-      reviews: [],
-    };
-    if (!this.results) this.results = [];
-    this.results.push(course);
+    title = title.replace(/\s/g, '+');
+    this.courseService.searchCourses(title, subject, code, component).subscribe(
+      (courses: Course[]) => {
+        if (courses) this.results = courses;
+      },
+      (err: HttpErrorResponse) => {
+        console.error(err);
+      }
+    );
   }
 }

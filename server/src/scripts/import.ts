@@ -2,7 +2,7 @@ import {Course, ICourse} from '../api/models/course';
 
 export const importCourses = (): void => {
     console.log('Running import...')
-    const timetable = require('../data/timetable.json');
+    const timetable = require('../../data/timetable.json');
     timetable.forEach((course: any) => {
         importCourse(course);
     })
@@ -24,6 +24,7 @@ async function importCourse(course: any) {
                 subject: course['subject'],
                 code: course['catalog_nbr'],
                 title: course['className'],
+                component: course['course_info'][0].ssr_component,
                 classSection: course['course_info'][0].class_section,
                 startTime: course['course_info'][0].start_time,
                 endTime: course['course_info'][0].end_time,

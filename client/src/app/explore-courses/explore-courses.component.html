@@ -5,7 +5,7 @@
   <input #courseTitle type="text" id="input-course-title">
   <label for="select-course-subject">Subject</label>
   <select #courseSubject name="subject" id="select-course-subject">
-    <option value="sbj1">Subject 1</option>
+    <option value="SE">SE</option>
   </select>
   <label for="input-course-code">Course Code</label>
   <input #courseCode type="text" id="input-course-code">
@@ -17,7 +17,7 @@
   >Search</button>
   <button>Clear</button>
 </div>
-<div *ngIf="results" class="course-results-container">
+<div *ngIf="results.length > 0" class="course-results-container">
   <h2>Results</h2>
   <ul>
     <li *ngFor="let course of results">
