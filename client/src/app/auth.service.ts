@@ -23,6 +23,7 @@ export class AuthService {
   addToLocalStorage(res: any): void {
     localStorage.setItem('timetable-token', res.token);
     localStorage.setItem('timetable-token-exp', res.exp);
+    localStorage.setItem('timetable-id', res.sub);
   }
 
   /** Removes the token and exp claim from local storage. */

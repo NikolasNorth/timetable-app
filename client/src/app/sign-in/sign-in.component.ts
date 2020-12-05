@@ -20,6 +20,10 @@ export class SignInComponent implements OnInit {
 
   ngOnInit(): void {
     this.showErrorMsg = false;
+    console.log(this.authService.isLoggedIn())
+    if (this.authService.isLoggedIn()) {
+      this.router.navigate(['account', localStorage.getItem('timetable-id')]);
+    }
   }
 
   /**
@@ -39,14 +43,12 @@ export class SignInComponent implements OnInit {
       .subscribe(
         (res: any) => {
           this.authService.addToLocalStorage(res);
+          this.router.navigate(['account', res.sub]);
         },
         (err: HttpErrorResponse) => {
           this.errorMsg = err.error.message;
           this.showErrorMsg = true;
           console.error(err);
-        },
-        () => {
-          // this.router.navigate(['account']);
         }
       );
   }
