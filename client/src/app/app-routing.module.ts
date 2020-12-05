@@ -9,9 +9,11 @@ import {HomeComponent} from './home/home.component';
 import {AccountComponent} from './account/account.component';
 import {ExploreCoursesComponent} from './explore-courses/explore-courses.component';
 import {ExploreSchedulesComponent} from './explore-schedules/explore-schedules.component';
+import {Err404Component} from './errors/err404/err404.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
+  {path: '**', component: Err404Component},
   {path: 'signup', component: SignUpComponent},
   {path: 'signin', component: SignInComponent},
   {path: 'request-password-reset', component: RequestPasswordResetComponent},

@@ -14,6 +14,7 @@ import { HeaderComponent } from './header/header.component';
 import { AccountComponent } from './account/account.component';
 import { ExploreCoursesComponent } from './explore-courses/explore-courses.component';
 import { ExploreSchedulesComponent } from './explore-schedules/explore-schedules.component';
+import { Err404Component } from './errors/err404/err404.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { ExploreSchedulesComponent } from './explore-schedules/explore-schedules
     AccountComponent,
     ExploreCoursesComponent,
     ExploreSchedulesComponent,
+    Err404Component,
   ],
   imports: [
     BrowserModule,
