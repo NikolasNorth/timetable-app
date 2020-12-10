@@ -3,7 +3,6 @@ import {AccountService} from '../account.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {Account} from '../@types/account';
 import {AuthService} from '../auth.service';
-import {log} from 'util';
 
 @Component({
   selector: 'app-account',

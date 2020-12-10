@@ -10,5 +10,12 @@
   </div>
   <div class="account-schedules-list">
     <h2>My Schedules ({{account.numSchedules}}) | </h2><a routerLink="/create-schedule">Create New</a>
+    <div *ngIf="account.numSchedules > 0">
+      <ul>
+        <li *ngFor="let schedule of account.schedules">
+          {{schedule.name}} ({{schedule.size}})
+        </li>
+      </ul>
+    </div>
   </div>
 </div>
