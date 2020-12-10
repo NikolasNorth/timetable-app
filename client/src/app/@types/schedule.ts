@@ -4,7 +4,7 @@ export interface Schedule {
   _id: string,
   name: string,
   description: string,
-  isPublic: boolean,
+  isPrivate: boolean,
   lastModified: Date,
   authorId: string,
   size: number,

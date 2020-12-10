@@ -13,6 +13,6 @@
     <input #name type="text" id="schedule-name">
     <label for="schedule-description">Description</label>
     <textarea #description name="description" id="schedule-description"></textarea>
-    <button (click)="createSchedule(visibility, name.value, description.value)">Create Schedule</button>
+    <button (click)="createSchedule(name.value, description.value, visibility)">Create Schedule</button>
   </div>
 </div>

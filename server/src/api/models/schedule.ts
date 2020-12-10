@@ -4,8 +4,8 @@ import {ICourse} from './course';
 export interface ISchedule extends mongoose.Document {
     name: string,
     description: string,
-    isPublic: boolean,
-    lastModified: Date,
+    isPrivate: boolean,
+    lastModified: number,
     authorId: string,
     size?: number,
     courses?: ICourse[],
@@ -14,8 +14,8 @@ export interface ISchedule extends mongoose.Document {
 const scheduleSchema = new mongoose.Schema({
     name: {type: String, required: true},
     description: {type: String, required: true},
-    isPublic: {type: Boolean, required: true},
-    lastModified: {type: Date, required: true},
+    isPrivate: {type: Boolean, required: true},
+    lastModified: {type: Number, required: true},
     authorId: {type: String, required: true},
     size: {type: Number, required: false, default: 0},
     courses: {type: Array, required: false, default: []},

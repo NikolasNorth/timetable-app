@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../auth.service';
 import {Account} from '../@types/account';
+import {ScheduleService} from '../schedule.service';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-create-schedule',
@@ -12,15 +14,25 @@ export class CreateScheduleComponent implements OnInit {
   account: Account;
   visibility: string;
 
-  constructor(private authService: AuthService) { }
+  constructor(
+    private authService: AuthService,
+    private scheduleService: ScheduleService,
+    ) { }
 
   ngOnInit(): void {
     this.showErrorMsg = false;
     this.visibility = 'private';
   }
 
-  createSchedule(visibility: string, name: string, desc: string): void {
+  createSchedule(name: string, desc: string, visibility: string): void {
     const isPrivate: boolean = visibility === 'private';
-    console.log(isPrivate, name, desc);
+    this.scheduleService.createSchedule(name, desc, isPrivate).subscribe(
+      (schedule) => {
+        console.log(schedule);
+      },
+      (err: HttpErrorResponse) => {
+        console.error(err);
+      }
+    )
   }
 }
