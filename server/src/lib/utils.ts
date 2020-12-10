@@ -5,14 +5,13 @@ import {transporter} from '../app';
 
 /** Generate a JSON Web Token */
 export const issueJwt = (account: IAccount): string => {
+    const date: Date = new Date()
     const payload: any = {
         sub: account._id,
-        iat: Date.now(),
+        iat: date.setDate(date.getDate()),
+        exp: date.setDate(date.getDate() + 1),  // 1 day
     };
-    const options: SignOptions = {
-        expiresIn: '1d',
-        algorithm: 'RS256',
-    }
+    const options: SignOptions = {algorithm: 'RS256'}
     return sign(payload, Config.jwt.PRIVATE_KEY, options);
 }
 

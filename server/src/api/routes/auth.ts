@@ -114,7 +114,7 @@ router.post('/signin', async (req: Request, res: Response) => {
             } else {
                 const token: string = utils.issueJwt(account);
                 res.status(200).json({
-                    sub: account._id,
+                    id: account._id,
                     success: true,
                     token: token,
                     exp: utils.getJwtExpiration(token),
