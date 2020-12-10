@@ -8,8 +8,8 @@ export interface IAccount extends mongoose.Document {
     isConfirmed: boolean,
     isAdmin: boolean,
     isActive: boolean,
-    numSchedules?: number,
-    schedules?: ISchedule[],
+    numSchedules: number,
+    schedules: ISchedule[],
     googleId?: number,
 }
 
