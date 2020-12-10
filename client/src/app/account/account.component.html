@@ -14,6 +14,7 @@
       <ul>
         <li *ngFor="let schedule of account.schedules">
           {{schedule.name}} ({{schedule.size}})
+          Last Modified: {{(getDateString(schedule.lastModified))}}
         </li>
       </ul>
     </div>

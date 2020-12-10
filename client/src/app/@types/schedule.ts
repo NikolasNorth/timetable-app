@@ -5,7 +5,7 @@ export interface Schedule {
   name: string,
   description: string,
   isPrivate: boolean,
-  lastModified: Date,
+  lastModified: number,
   authorId: string,
   size: number,
   courses: Course[],
