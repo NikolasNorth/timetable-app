@@ -37,6 +37,10 @@ export class AuthService {
     return Date.now() < Number(localStorage.getItem('timetable-token-exp'));
   }
 
+  getId(): string {
+    return localStorage.getItem('timetable-id');
+  }
+
   /**
    * Submits a POST request to the v1/auth/signup to create a new user account.
    *

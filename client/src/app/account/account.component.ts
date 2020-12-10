@@ -3,6 +3,7 @@ import {AccountService} from '../account.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {Account} from '../@types/account';
 import {AuthService} from '../auth.service';
+import {log} from 'util';
 
 @Component({
   selector: 'app-account',
@@ -19,7 +20,7 @@ export class AccountComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    const id: string | null = localStorage.getItem('timetable-id');
+    const id: string | null = this.authService.getId();
     if (!id || !this.authService.isLoggedIn()) {
       this.showErrorMsg = true;
     } else {

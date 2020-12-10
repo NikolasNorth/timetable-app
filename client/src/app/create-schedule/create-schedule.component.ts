@@ -3,6 +3,8 @@ import {AuthService} from '../auth.service';
 import {Account} from '../@types/account';
 import {ScheduleService} from '../schedule.service';
 import {HttpErrorResponse} from '@angular/common/http';
+import {Schedule} from '../@types/schedule';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-create-schedule',
@@ -17,6 +19,7 @@ export class CreateScheduleComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private scheduleService: ScheduleService,
+    private router: Router,
     ) { }
 
   ngOnInit(): void {
@@ -26,9 +29,15 @@ export class CreateScheduleComponent implements OnInit {
 
   createSchedule(name: string, desc: string, visibility: string): void {
     const isPrivate: boolean = visibility === 'private';
-    this.scheduleService.createSchedule(name, desc, isPrivate).subscribe(
+    const schedule: any = {
+      name: name,
+      description: desc,
+      isPrivate: isPrivate,
+      authorId: this.authService.getId(),
+    };
+    this.scheduleService.createSchedule(schedule as Schedule).subscribe(
       (schedule) => {
-        console.log(schedule);
+        this.router.navigate(['account']);
       },
       (err: HttpErrorResponse) => {
         console.error(err);

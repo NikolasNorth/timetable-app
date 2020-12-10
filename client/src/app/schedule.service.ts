@@ -15,14 +15,8 @@ export class ScheduleService {
 
   constructor(private httpClient: HttpClient) { }
 
-  createSchedule(name: string, desc: string, isPrivate: boolean): Observable<Schedule> {
+  createSchedule(schedule: Schedule): Observable<Schedule> {
     const url: string = `${this.hostname}/${this.resource}`;
-    const schedule: any = {
-      name: name,
-      description: desc,
-      isPrivate: isPrivate,
-      authorId: localStorage.getItem('timetable-token'),
-    };
     return this.httpClient.post<Schedule>(url, schedule, this.httpOptions);
   }
 }
