@@ -6,10 +6,22 @@ export const router = Router();
 router.get('/', async (req: Request, res: Response) => {
     try {
         const query: any = {}
-        if (req.query.title) query.title = req.query.title;
-        if (req.query.subject) query.subject = req.query.subject;
-        if (req.query.code) query.code = req.query.code;
-        if (req.query.component) query.component = req.query.component;
+        if (req.query.title) query.title = {
+            $regex: req.query.title,
+            $options: 'i',
+        };
+        if (req.query.subject) query.subject = {
+            $regex: '^' + req.query.subject + '$',
+            $options: 'i',
+        };
+        if (req.query.code) query.code = {
+            $regex: req.query.code,
+            $options: 'i',
+        };
+        if (req.query.component) query.component = {
+            $regex: '^' + req.query.component + '$',
+            $options: 'i',
+        };
         const results: ICourse[] = await Course.find(query).exec();
         res.status(200).json(results);
     } catch (err) {
