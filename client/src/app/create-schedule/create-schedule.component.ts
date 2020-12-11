@@ -27,9 +27,13 @@ export class CreateScheduleComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    this.showErrorMsg = false;
-    this.showCourseSearch = false;
-    this.visibility = 'private';
+    if (!this.authService.isSignedIn()) {
+      this.router.navigate(['signin']);
+    } else {
+      this.showErrorMsg = false;
+      this.showCourseSearch = false;
+      this.visibility = 'private';
+    }
   }
 
   /** Creates a new schedule. */
@@ -40,6 +44,7 @@ export class CreateScheduleComponent implements OnInit {
       description: desc,
       isPrivate: isPrivate,
       authorId: this.authService.getId(),
+      courses: this.schedule,
     };
     this.scheduleService.createSchedule(schedule as Schedule).subscribe(
       (schedule: Schedule) => {
