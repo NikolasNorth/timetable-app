@@ -33,12 +33,20 @@ export class AuthService {
   }
 
   /** Verifies if token has expired. */
-  isLoggedIn(): boolean {
-    return Date.now() < Number(localStorage.getItem('timetable-token-exp'));
+  isSignedIn(): boolean {
+    const id: string | null = this.getId();
+    const isTokenExp = Date.now() < this.getTokenExpiration();
+    return id && isTokenExp;
   }
 
-  getId(): string {
+  /** Returns the timetable-id from local storage */
+  getId(): string | null {
     return localStorage.getItem('timetable-id');
+  }
+
+  /** Returns the timetable token expiration from local storage */
+  getTokenExpiration(): number | null {
+    return Number(localStorage.getItem('timetable-token-exp'));
   }
 
   /**

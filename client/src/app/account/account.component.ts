@@ -3,6 +3,7 @@ import {AccountService} from '../account.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {Account} from '../@types/account';
 import {AuthService} from '../auth.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-account',
@@ -16,12 +17,13 @@ export class AccountComponent implements OnInit {
   constructor(
     private accountService: AccountService,
     private authService: AuthService,
+    private router: Router,
     ) { }
 
   ngOnInit(): void {
     const id: string | null = this.authService.getId();
-    if (!id || !this.authService.isLoggedIn()) {
-      this.showErrorMsg = true;
+    if (!this.authService.isSignedIn()) {
+      this.router.navigate(['signin']);
     } else {
       this.accountService.getAccount(id).subscribe(
         (res: Account) => {
