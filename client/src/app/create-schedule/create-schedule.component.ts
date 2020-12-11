@@ -5,6 +5,7 @@ import {ScheduleService} from '../schedule.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {Schedule} from '../@types/schedule';
 import {Router} from '@angular/router';
+import {Course} from '../@types/course';
 
 @Component({
   selector: 'app-create-schedule',
@@ -15,6 +16,9 @@ export class CreateScheduleComponent implements OnInit {
   showErrorMsg: boolean;
   account: Account;
   visibility: string;
+  showCourseSearch: boolean;
+  schedule: Course[] = [];
+  course: Course;
 
   constructor(
     private authService: AuthService,
@@ -24,6 +28,7 @@ export class CreateScheduleComponent implements OnInit {
 
   ngOnInit(): void {
     this.showErrorMsg = false;
+    this.showCourseSearch = false;
     this.visibility = 'private';
   }
 
@@ -36,12 +41,20 @@ export class CreateScheduleComponent implements OnInit {
       authorId: this.authService.getId(),
     };
     this.scheduleService.createSchedule(schedule as Schedule).subscribe(
-      (schedule) => {
+      (schedule: Schedule) => {
         this.router.navigate(['account']);
       },
       (err: HttpErrorResponse) => {
         console.error(err);
       }
     )
+  }
+
+  toggleShowCourseSearch(): void {
+    this.showCourseSearch = !this.showCourseSearch;
+  }
+
+  addCourseToSchedule($event): void {
+    this.schedule.push($event);
   }
 }

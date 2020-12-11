@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Course} from '../@types/course';
 import {CourseService} from '../course.service';
 import {HttpErrorResponse} from '@angular/common/http';
@@ -11,6 +11,8 @@ import {HttpErrorResponse} from '@angular/common/http';
 export class ExploreCoursesComponent implements OnInit {
   results: Course[];
   subjects: string[] = ['Select Subject'];
+
+  @Output() selectedCourse = new EventEmitter<Course>();
 
   constructor(private courseService: CourseService) { }
 
@@ -37,5 +39,10 @@ export class ExploreCoursesComponent implements OnInit {
         console.error(err);
       }
     );
+  }
+
+  selectCourse(course: Course): void {
+    this.selectedCourse.emit(course);
+    this.results = this.results.filter((c) => c._id !== course._id);
   }
 }
