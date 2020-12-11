@@ -1,6 +1,7 @@
 import {Router, Request, Response} from 'express';
 import {ISchedule, Schedule} from '../models/schedule';
 import {Account, IAccount} from '../models/account';
+import {ICourse} from '../models/course';
 
 export const router = Router();
 
@@ -17,12 +18,14 @@ router.post('/', async (req: Request, res: Response) => {
             const isPrivate: boolean = req.body.isPrivate;
             const lastModified: number = Date.now();
             const authorId: string = req.body.authorId;
+            const courses: ICourse[] = req.body.courses || [];
             const schedule: ISchedule = await Schedule.create({
                 name: name,
                 description: desc,
                 isPrivate: isPrivate,
                 lastModified: lastModified,
                 authorId: authorId,
+                courses: courses,
             });
             account.schedules.push(schedule);
             account.numSchedules++;

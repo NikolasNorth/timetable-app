@@ -7,8 +7,7 @@ export interface ISchedule extends mongoose.Document {
     isPrivate: boolean,
     lastModified: number,
     authorId: string,
-    size?: number,
-    courses?: ICourse[],
+    courses: ICourse[],
 }
 
 const scheduleSchema = new mongoose.Schema({
@@ -17,7 +16,6 @@ const scheduleSchema = new mongoose.Schema({
     isPrivate: {type: Boolean, required: true},
     lastModified: {type: Number, required: true},
     authorId: {type: String, required: true},
-    size: {type: Number, required: false, default: 0},
     courses: {type: Array, required: false, default: []},
 });
 
