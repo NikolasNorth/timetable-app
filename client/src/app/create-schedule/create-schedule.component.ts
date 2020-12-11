@@ -32,6 +32,7 @@ export class CreateScheduleComponent implements OnInit {
     this.visibility = 'private';
   }
 
+  /** Creates a new schedule. */
   createSchedule(name: string, desc: string, visibility: string): void {
     const isPrivate: boolean = visibility === 'private';
     const schedule: any = {
@@ -50,11 +51,16 @@ export class CreateScheduleComponent implements OnInit {
     )
   }
 
+  /** Toggles visibility of ExploreCourses component. */
   toggleShowCourseSearch(): void {
     this.showCourseSearch = !this.showCourseSearch;
   }
 
-  addCourseToSchedule($event): void {
+  /** Adds a course to the schedule (if it has not been added already). */
+  addCourseToSchedule($event: Course): void {
+    for (let i = 0; i < this.schedule.length; i++) {
+      if (this.schedule[i]._id === $event._id) return;
+    }
     this.schedule.push($event);
   }
 }

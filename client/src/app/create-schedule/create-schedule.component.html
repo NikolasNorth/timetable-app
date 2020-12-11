@@ -1,6 +1,3 @@
-<div *ngIf="showErrorMsg">
-  <h3>You must <a routerLink="/signin">sign in</a> to access this page.</h3>
-</div>
 <div *ngIf="!showErrorMsg">
   <div class="create-schedule-container">
     <h1>Build Schedule</h1>
@@ -23,6 +20,10 @@
     <button (click)="toggleShowCourseSearch()">Add Course</button>
   </div>
   <div *ngIf="showCourseSearch">
-    <app-explore-courses (selectedCourse)="addCourseToSchedule($event)"></app-explore-courses>
+    <app-explore-courses
+      [showAddCourseBtn]="showCourseSearch"
+      [schedule]="schedule"
+      (selectedCourse)="addCourseToSchedule($event)"
+    ></app-explore-courses>
   </div>
 </div>

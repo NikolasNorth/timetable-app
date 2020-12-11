@@ -23,7 +23,7 @@
     <li *ngFor="let course of results">
       {{course.subject}} {{course.code}} {{course.title}}<br>
       {{course.classSection}} {{course.startTime}}-{{course.endTime}}
-      <button (click)="selectCourse(course)">Add</button>
+      <button *ngIf="showAddCourseBtn" (click)="selectCourse(course)">Add</button>
     </li>
   </ul>
 </div>
