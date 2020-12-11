@@ -58,8 +58,10 @@ export class ExploreCoursesComponent implements OnInit {
    * schedule.
    */
   filterCourseResults(): void {
-    for (let i = 0; i < this.schedule.length; i++) {
-      this.results = this.results.filter((c: Course) => c._id !== this.schedule[i]._id);
+    if (this.schedule) {
+      for (let i = 0; i < this.schedule.length; i++) {
+        this.results = this.results.filter((c: Course) => c._id !== this.schedule[i]._id);
+      }
     }
   }
 }
