@@ -10,7 +10,7 @@ import {AccountComponent} from './account/account.component';
 import {ExploreCoursesComponent} from './explore-courses/explore-courses.component';
 import {ExploreSchedulesComponent} from './explore-schedules/explore-schedules.component';
 import {Err404Component} from './errors/err404/err404.component';
-import {CreateScheduleComponent} from './create-schedule/create-schedule.component';
+import {CreateSchedulePageComponent} from './create-schedule-page/create-schedule-page.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -22,7 +22,7 @@ const routes: Routes = [
   {path: 'account', component: AccountComponent},
   {path: 'explore-courses', component: ExploreCoursesComponent},
   {path: 'explore-schedules', component: ExploreSchedulesComponent},
-  {path: 'create-schedule', component: CreateScheduleComponent},
+  {path: 'create-schedule', component: CreateSchedulePageComponent},
   {path: '**', component: Err404Component},
 ]
 
