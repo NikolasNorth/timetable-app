@@ -14,7 +14,10 @@
     <p><b>Courses ({{schedule.length}})</b></p>
     <div *ngIf="schedule.length > 0">
       <ul>
-        <li *ngFor="let course of schedule">{{course.subject}} {{course.code}} {{course.title}}</li>
+        <li *ngFor="let course of schedule">
+          {{course.subject}} {{course.code}} {{course.title}}
+          <button (click)="removeCourse(course)">Remove</button>
+        </li>
       </ul>
     </div>
     <button (click)="toggleShowCourseSearch()">Add Course</button>

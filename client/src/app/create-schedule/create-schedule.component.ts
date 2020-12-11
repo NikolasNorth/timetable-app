@@ -63,4 +63,8 @@ export class CreateScheduleComponent implements OnInit {
     }
     this.schedule.push($event);
   }
+
+  removeCourse(course): void {
+    this.schedule = this.schedule.filter((c: Course) => c._id !== course._id);
+  }
 }
