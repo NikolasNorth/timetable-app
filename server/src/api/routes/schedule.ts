@@ -5,6 +5,17 @@ import {ICourse} from '../models/course';
 
 export const router = Router();
 
+router.get('/', async (req: Request, res: Response) => {
+   try {
+       const schedules: ISchedule[] = await Schedule.find({isPrivate: false})
+           .sort({lastModified: 'desc'}).exec();
+       res.status(200).json(schedules);
+   } catch (err) {
+       console.error(err);
+       res.status(500).json(err);
+   }
+});
+
 router.post('/', async (req: Request, res: Response) => {
     try {
         const account: IAccount | null = await Account.findById(req.body.authorId);

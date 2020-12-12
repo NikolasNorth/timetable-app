@@ -20,9 +20,9 @@ const routes: Routes = [
   {path: 'password-reset/:id/:token', component: PasswordResetComponent},
   {path: 'confirm-account/:token', component: ConfirmAccountComponent},
   {path: 'account', component: AccountComponent},
-  {path: 'explore-courses', component: ExploreCoursesComponent},
-  {path: 'explore-schedules', component: ExploreSchedulesComponent},
-  {path: 'create-schedule', component: CreateScheduleComponent},
+  {path: 'courses', component: ExploreCoursesComponent},
+  {path: 'schedules', component: ExploreSchedulesComponent},
+  {path: 'schedules/create', component: CreateScheduleComponent},
   {path: '**', component: Err404Component},
 ]
 

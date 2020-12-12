@@ -1,1 +1,19 @@
-<p>explore-schedules works!</p>
+<h1>Public Schedules</h1>
+<div *ngIf="schedules">
+  <ul>
+    <li *ngFor="let schedule of schedules">
+      <h3>Name: {{schedule.name}} ({{schedule.courses.length}})</h3>
+      <p><b>Created By:</b> {{schedule.authorId}}</p>
+      <p><b>Last Modified:</b> {{schedule.lastModified}}</p>
+      <h4>Description</h4>
+      <p>{{schedule.description}}</p>
+      <h4>Courses</h4>
+      <ul>
+        <li *ngFor="let course of schedule.courses">
+          <p>{{course.subject}} {{course.code}} {{course.title}}</p>
+          <p><b>{{course.classSection}}:</b> {{course.startTime}}-{{course.endTime}}</p>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>

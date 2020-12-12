@@ -19,4 +19,9 @@ export class ScheduleService {
     const url: string = `${this.hostname}/${this.resource}`;
     return this.httpClient.post<Schedule>(url, schedule, this.httpOptions);
   }
+
+  getPublicSchedules(): Observable<Schedule[]> {
+    const url: string = `${this.hostname}/${this.resource}`;
+    return this.httpClient.get<Schedule[]>(url);
+  }
 }
