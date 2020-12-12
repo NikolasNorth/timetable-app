@@ -1,32 +1,33 @@
-<div *ngIf="!showErrorMsg">
-  <div class="create-schedule-container">
-    <h1>Build Schedule</h1>
-    <button (click)="createSchedule(name.value, description.value, visibility)">Create Schedule</button>
-    <p>Visibility</p>
-    <label for="schedule-visibility-private">Private</label>
-    <input [(ngModel)]="visibility" type="radio" id="schedule-visibility-private" name="visibility" value="private" checked>
-    <label for="schedule-visibility-public">Public</label>
-    <input [(ngModel)]="visibility" type="radio" id="schedule-visibility-public" name="visibility" value="public">
-    <label for="schedule-name">Name</label>
-    <input #name type="text" id="schedule-name">
-    <label for="schedule-description">Description</label>
-    <textarea #description name="description" id="schedule-description"></textarea>
-    <p><b>Courses ({{schedule.length}})</b></p>
-    <div *ngIf="schedule.length > 0">
-      <ul>
-        <li *ngFor="let course of schedule">
-          {{course.subject}} {{course.code}} {{course.title}}
-          <button (click)="removeCourse(course)">Remove</button>
-        </li>
-      </ul>
-    </div>
-    <button (click)="toggleShowCourseSearch()">Add Courses</button>
+<div *ngIf="showErrorMsg">
+  <h3>{{errorMsg}}</h3>
+</div>
+<div class="create-schedule-container">
+  <h1>Build Schedule</h1>
+  <button (click)="createSchedule(name.value, description.value, visibility)">Create Schedule</button>
+  <p>Visibility</p>
+  <label for="schedule-visibility-private">Private</label>
+  <input [(ngModel)]="visibility" type="radio" id="schedule-visibility-private" name="visibility" value="private" checked>
+  <label for="schedule-visibility-public">Public</label>
+  <input [(ngModel)]="visibility" type="radio" id="schedule-visibility-public" name="visibility" value="public">
+  <label for="schedule-name">Name</label>
+  <input #name type="text" id="schedule-name">
+  <label for="schedule-description">Description</label>
+  <textarea #description name="description" id="schedule-description"></textarea>
+  <p><b>Courses ({{schedule.length}})</b></p>
+  <div *ngIf="schedule.length > 0">
+    <ul>
+      <li *ngFor="let course of schedule">
+        {{course.subject}} {{course.code}} {{course.title}}
+        <button (click)="removeCourse(course)">Remove</button>
+      </li>
+    </ul>
   </div>
-  <div *ngIf="showCourseSearch">
-    <app-explore-courses
-      [showAddCourseBtn]="showCourseSearch"
-      [schedule]="schedule"
-      (selectedCourse)="addCourseToSchedule($event)"
-    ></app-explore-courses>
-  </div>
+  <button (click)="toggleShowCourseSearch()">Add Courses</button>
+</div>
+<div *ngIf="showCourseSearch">
+  <app-explore-courses
+    [showAddCourseBtn]="showCourseSearch"
+    [schedule]="schedule"
+    (selectedCourse)="addCourseToSchedule($event)"
+  ></app-explore-courses>
 </div>

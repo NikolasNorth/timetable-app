@@ -13,8 +13,8 @@
     <div *ngIf="account.numSchedules > 0">
       <ul>
         <li *ngFor="let schedule of account.schedules">
-          {{schedule.name}} ({{schedule.courses.length}})
-          Last Modified: {{(getDateString(schedule.lastModified))}}
+          <h3>{{schedule.name}} | ({{schedule.courses.length}} courses)</h3>
+          <p>Last Modified: {{schedule.lastModified | date: 'MMMM dd, yyyy (h:m a)'}}</p>
         </li>
       </ul>
     </div>

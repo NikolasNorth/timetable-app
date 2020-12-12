@@ -14,6 +14,7 @@ import {Course} from '../@types/course';
 })
 export class CreateScheduleComponent implements OnInit {
   showErrorMsg: boolean;
+  errorMsg: string;
   account: Account;
   visibility: string;
   showCourseSearch: boolean;
@@ -27,6 +28,8 @@ export class CreateScheduleComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
+    this.errorMsg = '';
+    this.showErrorMsg = false;
     if (!this.authService.isSignedIn()) {
       this.router.navigate(['signin']);
     } else {
@@ -52,6 +55,8 @@ export class CreateScheduleComponent implements OnInit {
       },
       (err: HttpErrorResponse) => {
         console.error(err);
+        this.errorMsg = err.error.message;
+        this.showErrorMsg = true;
       }
     )
   }

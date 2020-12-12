@@ -36,8 +36,4 @@ export class AccountComponent implements OnInit {
       )
     }
   }
-
-  getDateString(timestamp: number): string {
-    return new Date(timestamp).toLocaleDateString();
-  }
 }
