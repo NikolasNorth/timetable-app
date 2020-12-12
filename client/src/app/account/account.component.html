@@ -9,7 +9,7 @@
     <a routerLink="/request-password-reset">Change Password</a>
   </div>
   <div class="account-schedules-list">
-    <h2>My Schedules ({{account.numSchedules}}) | </h2><a routerLink="/create-schedule">Create New</a>
+    <h2>My Schedules ({{account.numSchedules}}) | </h2><a routerLink="/schedules/create">Create New</a>
     <div *ngIf="account.numSchedules > 0">
       <ul>
         <li *ngFor="let schedule of account.schedules">
