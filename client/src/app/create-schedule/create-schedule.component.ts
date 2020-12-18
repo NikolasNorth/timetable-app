@@ -18,7 +18,7 @@ export class CreateScheduleComponent implements OnInit {
   account: Account;
   visibility: string;
   showCourseSearch: boolean;
-  schedule: Course[] = [];
+  courses: Course[] = [];
   course: Course;
 
   constructor(
@@ -47,7 +47,7 @@ export class CreateScheduleComponent implements OnInit {
       description: desc,
       isPrivate: isPrivate,
       authorId: this.authService.getId(),
-      courses: this.schedule,
+      courses: this.courses,
     };
     this.scheduleService.createSchedule(schedule as Schedule).subscribe(
       (schedule: Schedule) => {
@@ -68,14 +68,14 @@ export class CreateScheduleComponent implements OnInit {
 
   /** Adds a course to the schedule (if it has not been added already). */
   addCourseToSchedule($event: Course): void {
-    for (let i = 0; i < this.schedule.length; i++) {
-      if (this.schedule[i]._id === $event._id) return;
+    for (let i = 0; i < this.courses.length; i++) {
+      if (this.courses[i]._id === $event._id) return;
     }
-    this.schedule.push($event);
+    this.courses.push($event);
   }
 
   /** Removes a course from from the schedule builder. */
   removeCourse(course): void {
-    this.schedule = this.schedule.filter((c: Course) => c._id !== course._id);
+    this.courses = this.courses.filter((c: Course) => c._id !== course._id);
   }
 }

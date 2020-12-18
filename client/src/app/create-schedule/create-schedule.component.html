@@ -13,10 +13,10 @@
   <input #name type="text" id="schedule-name">
   <label for="schedule-description">Description</label>
   <textarea #description name="description" id="schedule-description"></textarea>
-  <p><b>Courses ({{schedule.length}})</b></p>
-  <div *ngIf="schedule.length > 0">
+  <p><b>Courses ({{courses.length}})</b></p>
+  <div *ngIf="courses.length > 0">
     <ul>
-      <li *ngFor="let course of schedule">
+      <li *ngFor="let course of courses">
         {{course.subject}} {{course.code}} {{course.title}}
         <button (click)="removeCourse(course)">Remove</button>
       </li>
@@ -27,7 +27,7 @@
 <div *ngIf="showCourseSearch">
   <app-explore-courses
     [showAddCourseBtn]="showCourseSearch"
-    [schedule]="schedule"
+    [schedule]="courses"
     (selectedCourse)="addCourseToSchedule($event)"
   ></app-explore-courses>
 </div>

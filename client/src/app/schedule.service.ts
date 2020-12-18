@@ -35,6 +35,11 @@ export class ScheduleService {
     return this.httpClient.get<Schedule[]>(url);
   }
 
+  editSchedule(id: string, schedule: Schedule): Observable<Schedule> {
+    const url: string = `${this.hostname}/${this.resource}/${id}`;
+    return this.httpClient.post<Schedule>(url, schedule, this.httpOptions);
+  }
+
   deleteSchedule(id: string): Observable<any> {
     const url: string = `${this.hostname}/${this.resource}/${id}`;
     this.httpOptions = {

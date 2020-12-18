@@ -67,6 +67,15 @@ router.post('/', async (req: Request, res: Response) => {
     }
 });
 
+router.post('/:id', (req: Request, res: Response) => {
+    try {
+        //
+    } catch (err) {
+        console.error(err);
+        res.status(500).json(err);
+    }
+})
+
 /** DELETE /v1/schedules/:id */
 router.delete('/:id', async (req: Request, res: Response) => {
     try {

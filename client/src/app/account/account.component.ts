@@ -5,6 +5,7 @@ import {Account} from '../@types/account';
 import {AuthService} from '../auth.service';
 import {Router} from '@angular/router';
 import {ScheduleService} from '../schedule.service';
+import {Schedule} from '../@types/schedule';
 
 @Component({
   selector: 'app-account',
@@ -32,6 +33,13 @@ export class AccountComponent implements OnInit {
     } else {
       this.getAccount(id);
     }
+  }
+
+  editSchedule(id: string): void {
+    const schedule: any = {
+
+    }
+    this.scheduleService.editSchedule(id, schedule as Schedule);
   }
 
   deleteSchedule(id: string): void {
