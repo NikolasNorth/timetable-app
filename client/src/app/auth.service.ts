@@ -39,12 +39,17 @@ export class AuthService {
     return id && isTokenExp;
   }
 
-  /** Returns the timetable-id from local storage */
+  /** Returns the timetable-id from local storage. */
   getId(): string | null {
     return localStorage.getItem('timetable-id');
   }
 
-  /** Returns the timetable token expiration from local storage */
+  /** Returns the timetable token from local storage. */
+  getToken(): string | null {
+    return localStorage.getItem('timetable-token');
+  }
+
+  /** Returns the timetable token expiration from local storage. */
   getTokenExpiration(): number | null {
     return Number(localStorage.getItem('timetable-token-exp'));
   }
