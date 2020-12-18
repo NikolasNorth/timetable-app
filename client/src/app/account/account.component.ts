@@ -4,6 +4,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {Account} from '../@types/account';
 import {AuthService} from '../auth.service';
 import {Router} from '@angular/router';
+import {ScheduleService} from '../schedule.service';
 
 @Component({
   selector: 'app-account',
@@ -11,29 +12,53 @@ import {Router} from '@angular/router';
   styleUrls: ['./account.component.scss']
 })
 export class AccountComponent implements OnInit {
-  showErrorMsg: boolean
-  account: Account;
+  public showFlashMsg: boolean;
+  public flashMsg: string;
+  public account: Account;
 
   constructor(
     private accountService: AccountService,
     private authService: AuthService,
+    private scheduleService: ScheduleService,
     private router: Router,
     ) { }
 
   ngOnInit(): void {
+    this.flashMsg = '';
+    this.showFlashMsg = false;
     const id: string | null = this.authService.getId();
     if (!this.authService.isSignedIn()) {
       this.router.navigate(['signin']);
     } else {
-      this.accountService.getAccount(id).subscribe(
-        (res: Account) => {
-          this.showErrorMsg = false;
-          this.account = res;
-        },
-        (err: HttpErrorResponse) => {
-          this.showErrorMsg = true;
-        }
-      )
+      this.getAccount(id);
     }
+  }
+
+  deleteSchedule(id: string): void {
+    this.scheduleService.deleteSchedule(id).subscribe(
+      (res: any) => {
+        this.flashMsg = 'Schedule deleted.'
+        this.showFlashMsg = true;
+        this.getAccount(this.account._id);
+      },
+      (err: HttpErrorResponse) => {
+        console.error(err);
+        this.flashMsg = err.error.message;
+        this.showFlashMsg = true;
+      }
+    )
+  }
+
+  getAccount(id: string): void {
+    this.accountService.getAccount(id).subscribe(
+      (account: Account) => {
+        this.account = account;
+      },
+      (err: HttpErrorResponse) => {
+        console.error(err);
+        this.flashMsg = err.error.message;
+        this.showFlashMsg = true;
+      }
+    )
   }
 }

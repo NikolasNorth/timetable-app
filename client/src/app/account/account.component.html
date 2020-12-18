@@ -1,5 +1,5 @@
-<div *ngIf="showErrorMsg">
-  <h3>You must <a routerLink="/signin">sign in</a> to access this page.</h3>
+<div *ngIf="showFlashMsg">
+  <h3>{{flashMsg}}</h3>
 </div>
 <div *ngIf="account">
   <div class="account-info">
@@ -13,8 +13,11 @@
     <div *ngIf="account.numSchedules > 0">
       <ul>
         <li *ngFor="let schedule of account.schedules">
-          <h3>{{schedule.name}} | ({{schedule.courses.length}} courses)</h3>
-          <p>Last Modified: {{schedule.lastModified | date: 'MMMM dd, yyyy (h:m a)'}}</p>
+          <div>
+            <h3>{{schedule.name}} | ({{schedule.courses.length}} courses)</h3>
+            <p>Last Modified: {{schedule.lastModified | date: 'MMMM dd, yyyy (h:m a)'}}</p>
+          </div>
+          <button (click)="deleteSchedule(schedule._id)">Delete</button>
         </li>
       </ul>
     </div>

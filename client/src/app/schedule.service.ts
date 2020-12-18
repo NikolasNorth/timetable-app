@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Schedule} from './@types/schedule';
+import {AuthService} from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,15 +14,35 @@ export class ScheduleService {
     headers: new HttpHeaders({'Content-Type': 'application/json'})
   }
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(
+    private httpClient: HttpClient,
+    private authService: AuthService,
+  ) { }
 
   createSchedule(schedule: Schedule): Observable<Schedule> {
     const url: string = `${this.hostname}/${this.resource}`;
+    this.httpOptions = {
+      headers: this.httpOptions.headers.append(
+        'Authorization',
+        `Bearer ${this.authService.getToken()}`
+      )
+    }
     return this.httpClient.post<Schedule>(url, schedule, this.httpOptions);
   }
 
   getPublicSchedules(): Observable<Schedule[]> {
     const url: string = `${this.hostname}/${this.resource}`;
     return this.httpClient.get<Schedule[]>(url);
+  }
+
+  deleteSchedule(id: string): Observable<any> {
+    const url: string = `${this.hostname}/${this.resource}/${id}`;
+    this.httpOptions = {
+      headers: this.httpOptions.headers.append(
+        'Authorization',
+        `Bearer ${this.authService.getToken()}`
+      )
+    }
+    return this.httpClient.delete<any>(url, this.httpOptions);
   }
 }

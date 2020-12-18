@@ -6,6 +6,7 @@ import {authenticate} from 'passport';
 
 export const router = Router();
 
+/** GET /v1/schedules */
 router.get('/', async (req: Request, res: Response) => {
    try {
        const schedules: ISchedule[] = await Schedule.find({isPrivate: false})
@@ -17,16 +18,24 @@ router.get('/', async (req: Request, res: Response) => {
    }
 });
 
-router.post('/', authenticate('jwt', {session: false}), async (req: Request, res: Response) => {
+/** POST /v1/schedules */
+router.post('/', async (req: Request, res: Response) => {
     try {
+        console.log('Inside POST Schedules')
         const account: IAccount | null = await Account.findById(req.body.authorId);
         if (!account) {
             res.status(404).json({
                 message: `Account with ID '${req.body.authorId}' does not exist.`
             });
         } else {
-            console.log(account.schedules.length);
-            if (account.schedules.length > 20) {
+            const isNameExists: ISchedule | undefined = account.schedules.find(
+                s => s.name === req.body.name
+            );
+            if (isNameExists) {
+                res.status(400).json({
+                    message: `Schedule name '${req.body.name}' already exists.`
+                });
+            } else if (account.schedules.length > 20) {
                 res.status(400).json({
                    message: 'Account cannot exceed 20 schedules.',
                 });
@@ -51,6 +60,32 @@ router.post('/', authenticate('jwt', {session: false}), async (req: Request, res
                 await account.save();
                 res.status(201).json(schedule);
             }
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json(err);
+    }
+});
+
+/** DELETE /v1/schedules/:id */
+router.delete('/:id', async (req: Request, res: Response) => {
+    try {
+        const id: string | null = req.params.id;
+        const schedule: ISchedule | null = await Schedule.findByIdAndDelete(id).exec();
+        if (!schedule) {
+            res.status(404).json({message: 'Schedule does not exist.'});
+        } else {
+            const account: IAccount | null = await Account.findById(schedule.authorId).exec();
+            if (account) {
+                account.schedules = account.schedules.filter((s: ISchedule) => {
+                    if (s._id.toString() === schedule._id.toString()) {
+                        account.numSchedules--;
+                    }
+                    return s._id.toString() !== schedule._id.toString();
+                });
+                await account.save();
+            }
+            res.status(204).json();
         }
     } catch (err) {
         console.error(err);
