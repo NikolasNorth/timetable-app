@@ -18,10 +18,26 @@ router.get('/', async (req: Request, res: Response) => {
    }
 });
 
+/** GET /v1/schedules/:id */
+router.get('/:id', async (req: Request, res: Response) => {
+    try {
+        const id: string | null = req.params.id;
+        const schedule: ISchedule | null = await Schedule.findById(id).exec();
+        if (schedule) {
+            res.status(200).json(schedule);
+        } else {
+            res.status(404).json({
+                message: 'Schedule does not exist.'
+            });
+        }
+    } catch (e) {
+        res.status(500).json(e);
+    }
+})
+
 /** POST /v1/schedules */
 router.post('/', async (req: Request, res: Response) => {
     try {
-        console.log('Inside POST Schedules')
         const account: IAccount | null = await Account.findById(req.body.authorId);
         if (!account) {
             res.status(404).json({
@@ -67,6 +83,7 @@ router.post('/', async (req: Request, res: Response) => {
     }
 });
 
+/** POST /v1/schedules/:id */
 router.post('/:id', (req: Request, res: Response) => {
     try {
         //
