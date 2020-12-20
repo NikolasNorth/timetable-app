@@ -35,13 +35,6 @@ export class AccountComponent implements OnInit {
     }
   }
 
-  editSchedule(id: string): void {
-    const schedule: any = {
-
-    }
-    this.scheduleService.editSchedule(id, schedule as Schedule);
-  }
-
   deleteSchedule(id: string): void {
     this.scheduleService.deleteSchedule(id).subscribe(
       (res: any) => {

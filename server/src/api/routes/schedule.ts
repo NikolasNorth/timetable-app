@@ -8,14 +8,14 @@ export const router = Router();
 
 /** GET /v1/schedules */
 router.get('/', async (req: Request, res: Response) => {
-   try {
-       const schedules: ISchedule[] = await Schedule.find({isPrivate: false})
-           .sort({lastModified: 'desc'}).limit(10).exec();
-       res.status(200).json(schedules);
-   } catch (err) {
-       console.error(err);
-       res.status(500).json(err);
-   }
+    try {
+        const schedules: ISchedule[] = await Schedule.find({isPrivate: false})
+            .sort({lastModified: 'desc'}).limit(10).exec();
+        res.status(200).json(schedules);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json(err);
+    }
 });
 
 /** GET /v1/schedules/:id */
@@ -53,7 +53,7 @@ router.post('/', async (req: Request, res: Response) => {
                 });
             } else if (account.schedules.length > 20) {
                 res.status(400).json({
-                   message: 'Account cannot exceed 20 schedules.',
+                    message: 'Account cannot exceed 20 schedules.',
                 });
             } else {
                 const name: string = req.body.name;
@@ -84,9 +84,41 @@ router.post('/', async (req: Request, res: Response) => {
 });
 
 /** POST /v1/schedules/:id */
-router.post('/:id', (req: Request, res: Response) => {
+router.post('/:id', async (req: Request, res: Response) => {
     try {
-        //
+        const schedule: ISchedule | null = await Schedule.findByIdAndUpdate(
+            req.params.id,
+            {
+                name: req.body.name,
+                description: req.body.description,
+                isPrivate: req.body.isPrivate,
+            },
+        ).exec();
+        if (!schedule) {
+            res.status(404).json({
+                message: 'Schedule does not exist.',
+            });
+        } else {
+            const account: IAccount | null = await Account.findById(
+                schedule.authorId
+            ).exec();
+            if (!account) {
+                res.status(404).json({
+                    message: 'Account does not exist.',
+                });
+            } else {
+                account.schedules = account.schedules.map((s: ISchedule) => {
+                    if (s._id.toString() === schedule._id.toString()) {
+                        s = schedule
+                    }
+                    return s;
+                });
+                console.log(account.schedules)
+                await account.save()  // FIXME: This operation performs as expected, however change is not reflected in db
+                await schedule.save();
+                res.status(201).json(schedule);
+            }
+        }
     } catch (err) {
         console.error(err);
         res.status(500).json(err);

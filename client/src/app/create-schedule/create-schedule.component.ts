@@ -41,7 +41,7 @@ export class CreateScheduleComponent implements OnInit {
 
   /** Creates a new schedule. */
   createSchedule(name: string, desc: string, visibility: string): void {
-    const isPrivate: boolean = visibility === 'private';
+    const isPrivate: boolean = (visibility === 'private');
     const schedule: any = {
       name: name,
       description: desc,

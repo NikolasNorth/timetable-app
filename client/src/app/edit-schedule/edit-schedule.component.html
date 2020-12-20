@@ -1,1 +1,28 @@
-<p>edit-schedule works!</p>
+<div *ngIf="schedule" class="edit-schedule-container">
+  <h1>{{schedule.name}}</h1>
+  <button (click)="editSchedule(name.value, description.value, visibility)">
+    Edit Schedule
+  </button>
+  <label for="edit-schedule-visibility-private">Private</label>
+  <input [(ngModel)]="visibility" type="radio"
+         id="edit-schedule-visibility-private" value="private"
+  >
+  <label for="edit-schedule-visibility-public">Public</label>
+  <input [(ngModel)]="visibility" type="radio"
+         id="edit-schedule-visibility-public" value="public"
+  >
+  <label for="edit-schedule-name">Name</label>
+  <input #name type="text" id="edit-schedule-name"
+         placeholder="{{schedule.name}}"
+  >
+  <label for="edit-schedule-description">Description</label>
+  <!-- TODO: Add pipe to description input to truncate text. -->
+  <input #description type="text" id="edit-schedule-description"
+         placeholder="{{schedule.description}}"
+  >
+</div>
+<div *ngIf="!schedule">
+  <h3>Schedule Not Found</h3>
+  <p>Go back to <a routerLink="/account">account</a> page.</p>
+</div>
+

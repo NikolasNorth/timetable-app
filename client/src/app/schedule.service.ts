@@ -30,13 +30,18 @@ export class ScheduleService {
     return this.httpClient.post<Schedule>(url, schedule, this.httpOptions);
   }
 
+  getSchedule(id: string): Observable<Schedule> {
+    const url: string = `${this.hostname}/${this.resource}/${id}`;
+    return this.httpClient.get<Schedule>(url);
+  }
+
   getPublicSchedules(): Observable<Schedule[]> {
     const url: string = `${this.hostname}/${this.resource}`;
     return this.httpClient.get<Schedule[]>(url);
   }
 
-  editSchedule(id: string, schedule: Schedule): Observable<Schedule> {
-    const url: string = `${this.hostname}/${this.resource}/${id}`;
+  editSchedule(schedule: Schedule): Observable<Schedule> {
+    const url: string = `${this.hostname}/${this.resource}/${schedule._id}`;
     return this.httpClient.post<Schedule>(url, schedule, this.httpOptions);
   }
 
