@@ -20,7 +20,7 @@ export class EditScheduleComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const id = this.activatedRoute.snapshot.paramMap.get('id');
+    const id: string = this.activatedRoute.snapshot.paramMap.get('id');
     this.scheduleService.getSchedule(id).subscribe(
       (schedule: Schedule) => {
         this.schedule = schedule;

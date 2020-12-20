@@ -30,6 +30,20 @@ router.get('/', async (req: Request, res: Response) => {
     }
 });
 
+router.get('/:id', async (req:Request, res:Response) => {
+    try {
+        const course:ICourse|null = await Course.findById(req.params.id).exec();
+        if (!course) {
+            res.status(404).json({
+                message: 'Course does not exist.'
+            });
+        } else res.status(200).json(course);
+    } catch (e) {
+        console.error(e);
+        res.status(500).json(e);
+    }
+})
+
 router.get('/subjects', async (req: Request, res: Response) => {
     try {
         const courses: string[] = await Course.find({}).distinct('subject').exec();

@@ -26,6 +26,11 @@ export class CourseService {
     return this.httpClient.get<Course[]>(url);
   }
 
+  getCourse(id:string):Observable<Course> {
+    const url:string = `${this.hostname}/${this.resource}/${id}`;
+    return this.httpClient.get<Course>(url);
+  }
+
   getSubjects(): Observable<string[]> {
     let url: string = `${this.hostname}/${this.resource}/subjects`;
     return this.httpClient.get<string[]>(url);
