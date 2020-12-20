@@ -12,6 +12,7 @@ import {ExploreSchedulesComponent} from './explore-schedules/explore-schedules.c
 import {Err404Component} from './errors/err404/err404.component';
 import {CreateScheduleComponent} from './create-schedule/create-schedule.component';
 import {EditScheduleComponent} from './edit-schedule/edit-schedule.component';
+import {CourseDetailComponent} from './course-detail/course-detail.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -22,6 +23,7 @@ const routes: Routes = [
   {path: 'confirm-account/:token', component: ConfirmAccountComponent},
   {path: 'account', component: AccountComponent},
   {path: 'courses', component: ExploreCoursesComponent},
+  {path: 'courses/:id', component: CourseDetailComponent},
   {path: 'schedules', component: ExploreSchedulesComponent},
   {path: 'schedules/create', component: CreateScheduleComponent},
   {path: 'schedules/edit/:id', component: EditScheduleComponent},

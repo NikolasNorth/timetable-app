@@ -18,6 +18,7 @@ import { ExploreSchedulesComponent } from './explore-schedules/explore-schedules
 import { Err404Component } from './errors/err404/err404.component';
 import { CreateScheduleComponent } from './create-schedule/create-schedule.component';
 import { EditScheduleComponent } from './edit-schedule/edit-schedule.component';
+import { CourseDetailComponent } from './course-detail/course-detail.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { EditScheduleComponent } from './edit-schedule/edit-schedule.component';
     Err404Component,
     CreateScheduleComponent,
     EditScheduleComponent,
+    CourseDetailComponent,
   ],
     imports: [
         BrowserModule,
