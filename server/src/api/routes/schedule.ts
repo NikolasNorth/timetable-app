@@ -6,7 +6,6 @@ import {authenticate} from 'passport';
 
 export const router = Router();
 
-/** GET /v1/schedules */
 router.get('/', async (req: Request, res: Response) => {
     try {
         const schedules: ISchedule[] = await Schedule.find({isPrivate: false})
@@ -18,7 +17,6 @@ router.get('/', async (req: Request, res: Response) => {
     }
 });
 
-/** GET /v1/schedules/:id */
 router.get('/:id', async (req: Request, res: Response) => {
     try {
         const id: string | null = req.params.id;
@@ -35,7 +33,6 @@ router.get('/:id', async (req: Request, res: Response) => {
     }
 })
 
-/** POST /v1/schedules */
 router.post('/', async (req: Request, res: Response) => {
     try {
         const account: IAccount | null = await Account.findById(req.body.authorId);
@@ -61,7 +58,7 @@ router.post('/', async (req: Request, res: Response) => {
                 const isPrivate: boolean = req.body.isPrivate;
                 const lastModified: number = Date.now();
                 const authorId: string = req.body.authorId;
-                const courses: ICourse[] = req.body.courses || [];
+                const courses: any = req.body.courses || [];  // FIXME: Why any here to prevent typescript error in new Schedule below?
                 const schedule: ISchedule = await Schedule.create({
                     name: name,
                     description: desc,
@@ -83,49 +80,43 @@ router.post('/', async (req: Request, res: Response) => {
     }
 });
 
-/** POST /v1/schedules/:id */
 router.post('/:id', async (req: Request, res: Response) => {
     try {
-        const schedule: ISchedule | null = await Schedule.findByIdAndUpdate(
-            req.params.id,
-            {
-                name: req.body.name,
-                description: req.body.description,
-                isPrivate: req.body.isPrivate,
-            },
-        ).exec();
-        if (!schedule) {
-            res.status(404).json({
-                message: 'Schedule does not exist.',
-            });
-        } else {
-            const account: IAccount | null = await Account.findById(
-                schedule.authorId
-            ).exec();
-            if (!account) {
-                res.status(404).json({
-                    message: 'Account does not exist.',
-                });
-            } else {
-                account.schedules = account.schedules.map((s: ISchedule) => {
-                    if (s._id.toString() === schedule._id.toString()) {
-                        s = schedule
-                    }
-                    return s;
-                });
-                console.log(account.schedules)
-                await account.save()  // FIXME: This operation performs as expected, however change is not reflected in db
-                await schedule.save();
-                res.status(201).json(schedule);
-            }
-        }
-    } catch (err) {
-        console.error(err);
-        res.status(500).json(err);
-    }
-})
+        let schedule: ISchedule | null = await Schedule.findById(req.params.id).exec();
+        if (schedule) {
+            if (req.body.name) schedule.name = req.body.name;
+            if (req.body.description) schedule.description = req.body.description;
+            if (req.body.isPrivate) schedule.isPrivate = req.body.isPrivate;
+            schedule.lastModified = Date.now();
+            schedule = await schedule.save();
 
-/** DELETE /v1/schedules/:id */
+            let account: IAccount | null = await Account.findById(schedule.authorId).exec();
+            if (account) {
+                // @ts-ignore  FIXME
+                account.schedules = account.schedules.map((s: ISchedule) => {
+                    if (s._id.toString() === schedule?._id.toString())
+                        return schedule;
+                    else
+                        return s;
+                });
+                await account.save()
+                res.status(201).json(schedule);
+            } else {
+                res.status(404).json({
+                    message: 'Accound not found',
+                });
+            }
+        } else {
+            res.status(404).json({
+                message: 'Schedule not found.',
+            });
+        }
+    } catch (e) {
+        console.error(e);
+        res.status(500).json(e);
+    }
+});
+
 router.delete('/:id', async (req: Request, res: Response) => {
     try {
         const id: string | null = req.params.id;

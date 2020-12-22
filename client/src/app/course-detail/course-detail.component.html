@@ -23,7 +23,7 @@
     <input #title type="text" id="new-course-comment-title">
     <label for="new-course-comment-desc">Description</label>
     <input #desc type="text" id="new-course-comment-desc">
-    <button (click)="postComment(title.value, desc.value)">Post</button>
+    <button (click)="postReview(title.value, desc.value)">Post</button>
   </div>
 </div>
 <div *ngIf="showErrorMsg">

@@ -3,6 +3,10 @@ import {ActivatedRoute} from '@angular/router';
 import {CourseService} from '../course.service';
 import {Course} from '../@types/course';
 import {HttpErrorResponse} from '@angular/common/http';
+import {ReviewService} from '../review.service';
+import {Review} from '../@types/review';
+import {AccountService} from '../account.service';
+import {Account} from '../@types/account';
 
 @Component({
   selector: 'app-course-detail',
@@ -10,6 +14,7 @@ import {HttpErrorResponse} from '@angular/common/http';
   styleUrls: ['./course-detail.component.scss']
 })
 export class CourseDetailComponent implements OnInit {
+  public account:Account;
   public course:Course;
   public showErrorMsg:boolean;
   public showNewComment:boolean;
@@ -17,6 +22,8 @@ export class CourseDetailComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private courseService: CourseService,
+    private reviewService: ReviewService,
+    private accountService: AccountService,
   ) { }
 
   ngOnInit(): void {
@@ -33,8 +40,11 @@ export class CourseDetailComponent implements OnInit {
     this.showNewComment = !this.showNewComment;
   }
 
-  postComment(title:string, desc:string):void {
-    console.log(title);
-    console.log(desc);
+  postReview(title:string, desc:string):void {
+    const review:any = {
+      title: title,
+      description: desc,
+
+    }
   }
 }

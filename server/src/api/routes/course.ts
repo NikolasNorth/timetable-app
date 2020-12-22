@@ -30,8 +30,19 @@ router.get('/', async (req: Request, res: Response) => {
     }
 });
 
+router.get('/subjects', async (req: Request, res: Response) => {
+    try {
+        const courses:string[] = await Course.find({}).distinct('subject').exec();
+        res.status(200).json(courses);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json(err);
+    }
+});
+
 router.get('/:id', async (req:Request, res:Response) => {
     try {
+        console.log('Hey');
         const course:ICourse|null = await Course.findById(req.params.id).exec();
         if (!course) {
             res.status(404).json({
@@ -41,15 +52,5 @@ router.get('/:id', async (req:Request, res:Response) => {
     } catch (e) {
         console.error(e);
         res.status(500).json(e);
-    }
-})
-
-router.get('/subjects', async (req: Request, res: Response) => {
-    try {
-        const courses: string[] = await Course.find({}).distinct('subject').exec();
-        res.status(200).json(courses);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json(err);
     }
 });

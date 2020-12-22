@@ -1,16 +1,16 @@
-import {Config} from './etc/config';
+import { Config } from './etc/config';
 import express, {Application} from 'express';
 import mongoose, {ConnectionOptions} from 'mongoose';
 import bodyParser from 'body-parser';
-import {requestLogger, preventCorsErrors} from "./app.middleware";
-import {router as accountRouter} from './api/routes/account';
-import {router as authRouter} from './api/routes/auth';
-import {router as courseRouter} from './api/routes/course';
-import {router as scheduleRouter} from './api/routes/schedule';
+import { requestLogger, preventCorsErrors } from "./app.middleware";
+import { router as accountRouter } from './api/routes/account';
+import { router as authRouter } from './api/routes/auth';
+import { router as courseRouter } from './api/routes/course';
+import { router as scheduleRouter } from './api/routes/schedule';
 import * as nodemailer from 'nodemailer';
 import passport from 'passport';
-import {initializePassport} from './config/passport';
-import {importCourses} from './scripts/import';
+import { initializePassport } from './config/passport';
+import { importCourses } from './scripts/import';
 
 export const app: Application = express();
 export const transporter = nodemailer.createTransport({
