@@ -23,6 +23,7 @@ import { FooterComponent } from './footer/footer.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { DmcaPolicyComponent } from './dmca-policy/dmca-policy.component';
 import { AcceptableUsePolicyComponent } from './acceptable-use-policy/acceptable-use-policy.component';
+import { SecurityPolicyComponent } from './security-policy/security-policy.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { AcceptableUsePolicyComponent } from './acceptable-use-policy/acceptable
     PrivacyPolicyComponent,
     DmcaPolicyComponent,
     AcceptableUsePolicyComponent,
+    SecurityPolicyComponent,
   ],
     imports: [
         BrowserModule,
