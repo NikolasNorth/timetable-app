@@ -20,6 +20,9 @@ import { CreateScheduleComponent } from './create-schedule/create-schedule.compo
 import { EditScheduleComponent } from './edit-schedule/edit-schedule.component';
 import { CourseDetailComponent } from './course-detail/course-detail.component';
 import { FooterComponent } from './footer/footer.component';
+import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
+import { DmcaPolicyComponent } from './dmca-policy/dmca-policy.component';
+import { AcceptableUsePolicyComponent } from './acceptable-use-policy/acceptable-use-policy.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +42,9 @@ import { FooterComponent } from './footer/footer.component';
     EditScheduleComponent,
     CourseDetailComponent,
     FooterComponent,
+    PrivacyPolicyComponent,
+    DmcaPolicyComponent,
+    AcceptableUsePolicyComponent,
   ],
     imports: [
         BrowserModule,

@@ -13,6 +13,9 @@ import {Err404Component} from './errors/err404/err404.component';
 import {CreateScheduleComponent} from './create-schedule/create-schedule.component';
 import {EditScheduleComponent} from './edit-schedule/edit-schedule.component';
 import {CourseDetailComponent} from './course-detail/course-detail.component';
+import {PrivacyPolicyComponent} from './privacy-policy/privacy-policy.component';
+import {DmcaPolicyComponent} from './dmca-policy/dmca-policy.component';
+import {AcceptableUsePolicyComponent} from './acceptable-use-policy/acceptable-use-policy.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -27,6 +30,9 @@ const routes: Routes = [
   {path: 'schedules', component: ExploreSchedulesComponent},
   {path: 'schedules/create', component: CreateScheduleComponent},
   {path: 'schedules/edit/:id', component: EditScheduleComponent},
+  {path: 'privacy', component: PrivacyPolicyComponent},
+  {path: 'dmca', component: DmcaPolicyComponent},
+  {path: 'acceptable-use', component: AcceptableUsePolicyComponent},
   {path: '**', component: Err404Component},
 ]
 
