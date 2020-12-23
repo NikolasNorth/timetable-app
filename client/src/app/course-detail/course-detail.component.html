@@ -1,3 +1,9 @@
+<div *ngIf="showErrorMsg">
+  <h3>
+    The course you are looking for does not exist.
+    <a routerLink="/courses">Search</a> for another.
+  </h3>
+</div>
 <div *ngIf="!showErrorMsg">
   <div>
     <h1>{{course.title}}</h1>
@@ -8,14 +14,14 @@
       <p>{{course.rating}}</p>
     </div>
     <div *ngIf="course.reviews.length > 0">
-      <h3>Comments</h3>
+      <h3>Reviews</h3>
       <ul>
         <li *ngFor="let review of course.reviews">
           {{review.title}}
         </li>
       </ul>
     </div>
-    <button (click)="toggleNewComment()">New Comment</button>
+    <button (click)="toggleNewComment()">New Review</button>
   </div>
   <div *ngIf="showNewComment">
     <h3>New Comment</h3>
@@ -23,12 +29,6 @@
     <input #title type="text" id="new-course-comment-title">
     <label for="new-course-comment-desc">Description</label>
     <input #desc type="text" id="new-course-comment-desc">
-    <button (click)="postReview(title.value, desc.value)">Post</button>
+    <button (click)="createReview(title.value, desc.value, course._id)">Post</button>
   </div>
-</div>
-<div *ngIf="showErrorMsg">
-  <h3>
-    The course you are looking for does not exist.
-    <a routerLink="/courses">Search</a> for another.
-  </h3>
 </div>

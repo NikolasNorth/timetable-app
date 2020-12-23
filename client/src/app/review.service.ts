@@ -17,8 +17,8 @@ export class ReviewService {
     private httpClient: HttpClient,
   ) { }
 
-  createReview(review:Review):Observable<Review> {
-    const url = `${this.hostname}/${this.resource}`;
+  createReview(review: Review): Observable<Review> {
+    const url: string = `${this.hostname}/${this.resource}/course/${review.courseId}`;
     return this.httpClient.post<Review>(url, review, this.httpOptions);
   }
 }

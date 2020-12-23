@@ -11,7 +11,7 @@ export interface ICourse extends mongoose.Document {
     endTime?: string,
     days?: string[],
     rating?: number,
-    reviews?: IReview[],
+    reviews: IReview[],
 }
 
 const courseSchema = new mongoose.Schema({

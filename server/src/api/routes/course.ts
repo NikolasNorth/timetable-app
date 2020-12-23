@@ -42,7 +42,6 @@ router.get('/subjects', async (req: Request, res: Response) => {
 
 router.get('/:id', async (req:Request, res:Response) => {
     try {
-        console.log('Hey');
         const course:ICourse|null = await Course.findById(req.params.id).exec();
         if (!course) {
             res.status(404).json({

@@ -29,6 +29,7 @@ async function importCourse(course: any) {
                 startTime: course['course_info'][0].start_time,
                 endTime: course['course_info'][0].end_time,
                 days: course['course_info'][0].days || [],
+                reviews: [],
             });
             await newCourse.save();
         }

@@ -24,6 +24,7 @@
       {{course.subject}} {{course.code}} {{course.title}}<br>
       {{course.classSection}} {{course.startTime}}-{{course.endTime}}
       <button *ngIf="showAddCourseBtn" (click)="selectCourse(course)">Add</button>
+      <a routerLink="/courses/{{course._id}}">See More</a>
     </li>
   </ul>
 </div>

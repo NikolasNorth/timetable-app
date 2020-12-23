@@ -3,7 +3,7 @@ export interface Review {
   title: string,
   description: string,
   authorId: string,
-  dateOfPublish: Date,
+  dateOfPublish: number,
   isVisible: boolean,
   courseId: string,
 }
