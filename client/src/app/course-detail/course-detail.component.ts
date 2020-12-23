@@ -17,6 +17,7 @@ import {AuthService} from '../auth.service';
 export class CourseDetailComponent implements OnInit {
   public accountId: string;
   public course: Course;
+  public courseReviews: Review[];
   public showErrorMsg: boolean;
   public showNewComment: boolean;
 
@@ -42,15 +43,22 @@ export class CourseDetailComponent implements OnInit {
     this.showNewComment = !this.showNewComment;
   }
 
-  createReview(title:string, desc:string, courseId: string): void {
+  createReview(title:string, desc:string): void {
     const review: any = {
       title: title,
       description: desc,
       authorId: this.accountId,
-      courseId: courseId,
+      courseId: this.course._id,
     };
     this.reviewService.createReview(review as Review).subscribe(
-      (review: Review) => console.log(review),
+      (review: Review) => this.getReviews(),
+      (e: HttpErrorResponse) => console.error(e)
+    )
+  }
+
+  getReviews(): void {
+    this.reviewService.getReviewsByCourse(this.course._id).subscribe(
+      (reviews: Review[]) => this.course.reviews = reviews,
       (e: HttpErrorResponse) => console.error(e)
     )
   }

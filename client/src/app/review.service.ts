@@ -21,4 +21,9 @@ export class ReviewService {
     const url: string = `${this.hostname}/${this.resource}/course/${review.courseId}`;
     return this.httpClient.post<Review>(url, review, this.httpOptions);
   }
+
+  getReviewsByCourse(id: string): Observable<Review[]> {
+    const url: string = `${this.hostname}/${this.resource}/course/${id}`;
+    return this.httpClient.get<Review[]>(url);
+  }
 }

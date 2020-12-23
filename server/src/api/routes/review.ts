@@ -4,6 +4,22 @@ import {Course, ICourse} from '../models/course';
 
 export const router = Router();
 
+router.get('/course/:id', async (req: Request, res: Response) => {
+    try {
+        const course: ICourse | null = await Course.findById(req.params.id).exec();
+        if (course) {
+            res.status(200).json(course.reviews);
+        } else {
+            res.status(404).json({
+                message: 'Course not found.'
+            });
+        }
+    } catch (e) {
+        console.error(e);
+        res.status(500).json(e);
+    }
+})
+
 router.post('/course/:id', async (req: Request, res: Response) => {
     try {
         const course: ICourse | null = await Course
