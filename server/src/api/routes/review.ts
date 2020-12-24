@@ -1,6 +1,7 @@
 import {Router, Request, Response} from 'express';
 import {IReview, Review} from '../models/review';
 import {Course, ICourse} from '../models/course';
+import { authenticate } from 'passport';
 
 export const router = Router();
 
@@ -20,7 +21,7 @@ router.get('/course/:id', async (req: Request, res: Response) => {
     }
 })
 
-router.post('/course/:id', async (req: Request, res: Response) => {
+router.post('/course/:id', authenticate('jwt', {session: false}), async (req: Request, res: Response) => {
     try {
         const course: ICourse | null = await Course
             .findById(req.body.courseId).exec();

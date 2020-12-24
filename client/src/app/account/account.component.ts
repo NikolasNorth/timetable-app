@@ -28,10 +28,11 @@ export class AccountComponent implements OnInit {
     this.flashMsg = '';
     this.showFlashMsg = false;
     const id: string | null = this.authService.getId();
-    if (!this.authService.isSignedIn()) {
-      this.router.navigate(['signin']);
-    } else {
+    if (this.authService.isSignedIn()) {
       this.getAccount(id);
+    } else {
+      console.log('Navigate back')
+      this.router.navigate(['signin']);
     }
   }
 

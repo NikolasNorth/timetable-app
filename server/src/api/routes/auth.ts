@@ -79,11 +79,6 @@ router.get('/confirm/:token', async (req: Request, res: Response) => {
     }
 });
 
-/**
- * POST /v1/accounts/find
- *
- * Find a user account.
- */
 router.post('/signin', async (req: Request, res: Response) => {
     const email: string = req.body.email;
     const password: string = req.body.password;

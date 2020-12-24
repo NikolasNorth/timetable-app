@@ -3,6 +3,7 @@ import {Schedule} from '../@types/schedule';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ScheduleService} from '../schedule.service';
 import {HttpErrorResponse} from '@angular/common/http';
+import {AuthService} from '../auth.service';
 
 @Component({
   selector: 'app-edit-schedule',
@@ -16,20 +17,25 @@ export class EditScheduleComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private scheduleService: ScheduleService,
+    private authService: AuthService,
     private router: Router,
   ) { }
 
   ngOnInit(): void {
-    const id: string = this.activatedRoute.snapshot.paramMap.get('id');
-    this.scheduleService.getSchedule(id).subscribe(
-      (schedule: Schedule) => {
-        this.schedule = schedule;
-        this.visibility = (schedule.isPrivate ? 'private' : 'public');
-      },
-      (err: HttpErrorResponse) => {
-        console.error(err);
-      }
-    )
+    if (!this.authService.isSignedIn()) {
+      this.router.navigate(['signin']);
+    } else {
+      const id: string = this.activatedRoute.snapshot.paramMap.get('id');
+      this.scheduleService.getSchedule(id).subscribe(
+        (schedule: Schedule) => {
+          this.schedule = schedule;
+          this.visibility = (schedule.isPrivate ? 'private' : 'public');
+        },
+        (err: HttpErrorResponse) => {
+          console.error(err);
+        }
+      )
+    }
   }
 
   editSchedule(name: string, desc: string, visibility: string): void {

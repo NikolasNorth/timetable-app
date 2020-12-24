@@ -33,7 +33,7 @@ router.get('/:id', async (req: Request, res: Response) => {
     }
 })
 
-router.post('/', async (req: Request, res: Response) => {
+router.post('/', authenticate('jwt', {session: false}), async (req: Request, res: Response) => {
     try {
         const account: IAccount | null = await Account.findById(req.body.authorId);
         if (!account) {
@@ -80,7 +80,7 @@ router.post('/', async (req: Request, res: Response) => {
     }
 });
 
-router.post('/:id', async (req: Request, res: Response) => {
+router.post('/:id', authenticate('jwt', {session: false}), async (req: Request, res: Response) => {
     try {
         let schedule: ISchedule | null = await Schedule.findById(req.params.id).exec();
         if (schedule) {
@@ -117,7 +117,7 @@ router.post('/:id', async (req: Request, res: Response) => {
     }
 });
 
-router.delete('/:id', async (req: Request, res: Response) => {
+router.delete('/:id', authenticate('jwt', {session: false}), async (req: Request, res: Response) => {
     try {
         const id: string | null = req.params.id;
         const schedule: ISchedule | null = await Schedule.findByIdAndDelete(id).exec();

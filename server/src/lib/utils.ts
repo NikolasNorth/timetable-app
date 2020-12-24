@@ -5,7 +5,7 @@ import {transporter} from '../app';
 
 /** Generate a JSON Web Token */
 export const issueJwt = (account: IAccount): string => {
-    const date: Date = new Date()
+    const date: Date = new Date();
     const payload: any = {
         sub: account._id,
         iat: date.setDate(date.getDate()),

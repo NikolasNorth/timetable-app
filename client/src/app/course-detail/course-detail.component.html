@@ -21,7 +21,9 @@
         </li>
       </ul>
     </div>
-    <button (click)="toggleNewComment()">New Review</button>
+    <div *ngIf="showNewCommentBtn">
+      <button (click)="toggleNewComment()">New Review</button>
+    </div>
   </div>
   <div *ngIf="showNewComment">
     <h3>New Comment</h3>

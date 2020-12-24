@@ -4,7 +4,7 @@ import {Account, IAccount} from '../models/account';
 
 export const router = Router();
 
-router.get('/:id', async (req: Request, res: Response) => {
+router.get('/:id', authenticate('jwt', {session: false}), async (req: Request, res: Response) => {
     const id: string | null = req.params.id;
     try {
         const account: IAccount | null = await Account.findById(id).exec();
@@ -26,4 +26,4 @@ router.get('/:id', async (req: Request, res: Response) => {
             message: 'Internal server error.',
         });
     }
-})
+});

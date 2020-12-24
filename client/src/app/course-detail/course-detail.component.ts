@@ -20,6 +20,7 @@ export class CourseDetailComponent implements OnInit {
   public courseReviews: Review[];
   public showErrorMsg: boolean;
   public showNewComment: boolean;
+  public showNewCommentBtn: boolean;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -31,6 +32,7 @@ export class CourseDetailComponent implements OnInit {
   ngOnInit(): void {
     this.showErrorMsg = false;
     this.showNewComment = false;
+    this.showNewCommentBtn = this.authService.isSignedIn();
     this.accountId = this.authService.getId();
     const courseId: string = this.activatedRoute.snapshot.paramMap.get('id');
     this.courseService.getCourse(courseId).subscribe(
@@ -39,8 +41,12 @@ export class CourseDetailComponent implements OnInit {
     );
   }
 
-  toggleNewComment():void {
-    this.showNewComment = !this.showNewComment;
+  toggleNewComment(): void {
+    if (this.authService.isSignedIn()) {
+      this.showNewComment = !this.showNewComment;
+    } else {
+      this.showNewComment = false;
+    }
   }
 
   createReview(title:string, desc:string): void {
@@ -53,13 +59,13 @@ export class CourseDetailComponent implements OnInit {
     this.reviewService.createReview(review as Review).subscribe(
       (review: Review) => this.getReviews(),
       (e: HttpErrorResponse) => console.error(e)
-    )
+    );
   }
 
   getReviews(): void {
     this.reviewService.getReviewsByCourse(this.course._id).subscribe(
       (reviews: Review[]) => this.course.reviews = reviews,
       (e: HttpErrorResponse) => console.error(e)
-    )
+    );
   }
 }

@@ -30,12 +30,10 @@ export class CreateScheduleComponent implements OnInit {
   ngOnInit(): void {
     this.errorMsg = '';
     this.showErrorMsg = false;
+    this.showCourseSearch = false;
+    this.visibility = 'private';
     if (!this.authService.isSignedIn()) {
       this.router.navigate(['signin']);
-    } else {
-      this.showErrorMsg = false;
-      this.showCourseSearch = false;
-      this.visibility = 'private';
     }
   }
 

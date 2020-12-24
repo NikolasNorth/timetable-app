@@ -34,9 +34,7 @@ export class AuthService {
 
   /** Verifies if token has expired. */
   isSignedIn(): boolean {
-    const id: string | null = this.getId();
-    const isTokenExp = Date.now() < this.getTokenExpiration();
-    return id && isTokenExp;
+    return !(!this.getId() || Date.now() >= this.getTokenExpiration());
   }
 
   /** Returns the timetable-id from local storage. */
