@@ -4,6 +4,17 @@ import {Account, IAccount} from '../models/account';
 
 export const router = Router();
 
+
+router.get('/admins', authenticate('jwt', {session: false}), async (req: Request, res: Response) => {
+    try {
+        const accounts: IAccount[] = await Account.find({isAdmin: true}).exec();
+        res.status(200).json(accounts);
+    } catch (e) {
+        console.error(e);
+        res.status(500).json(e);
+    }
+});
+
 router.get('/:id', authenticate('jwt', {session: false}), async (req: Request, res: Response) => {
     const id: string | null = req.params.id;
     try {

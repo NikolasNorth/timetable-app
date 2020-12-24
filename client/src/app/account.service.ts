@@ -33,18 +33,12 @@ export class AccountService {
     return this.httpClient.get<Account>(url, options);
   }
 
-  isAdminAccount(id: string): boolean {
-    let isAdmin: boolean;
-    this.getAccount(id).subscribe(
-      (account: Account) => {
-        isAdmin = account.isAdmin
-      },
-      (e: HttpErrorResponse) => {
-        console.error(e);
-        isAdmin = false;
-      }
-    );
-    console.log(isAdmin);
-    return isAdmin;
+  getAdminAccounts(): Observable<Account[]> {
+    const url: string = `${this.hostname}/${this.resource}/admins`;
+    const token: string = localStorage.getItem('timetable-token');
+    const options = {
+      headers: new HttpHeaders({'Authorization': `Bearer ${token}`})
+    };
+    return this.httpClient.get<Account[]>(url, options);
   }
 }

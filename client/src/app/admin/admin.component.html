@@ -1,1 +1,8 @@
-<p>admin works!</p>
+<h1>Admin</h1>
+<h3>Accounts with site manager privileges:</h3>
+<a>Add New</a>
+<ul>
+  <li *ngFor="let admin of adminAccounts">{{admin.name}} {{admin.email}}</li>
+</ul>
+<a>Manage Course Reviews</a>
+<a>Manage User Accounts</a>

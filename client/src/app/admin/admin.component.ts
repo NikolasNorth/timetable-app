@@ -12,6 +12,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 })
 export class AdminComponent implements OnInit {
   public account: Account;
+  public adminAccounts: Account[];
 
   constructor(
     private authService: AuthService,
@@ -29,9 +30,17 @@ export class AdminComponent implements OnInit {
           this.router.navigate(['account']);
         } else {
           this.account = account;
+          this.getAdminAccounts();
         }
       },
       (e: HttpErrorResponse) => console.error(e)
     );
+  }
+
+  getAdminAccounts(): void {
+    this.accountService.getAdminAccounts().subscribe(
+      (accounts: Account[]) => this.adminAccounts = accounts,
+      (e: HttpErrorResponse) => console.error(e)
+    )
   }
 }
