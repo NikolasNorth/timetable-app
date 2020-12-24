@@ -15,15 +15,6 @@ export class AccountService {
 
   constructor(private httpClient: HttpClient) { }
 
-  accessProtectedRoute(): Observable<any> {
-    const url: string = `${this.hostname}/${this.resource}/protected`;
-    const token: string = localStorage.getItem('timetable-token');
-    const options = {
-      headers: new HttpHeaders({'Authorization': `Bearer ${token}`})
-    };
-    return this.httpClient.get<any>(url, options);
-  }
-
   getAccount(id: string): Observable<Account> {
     const url: string = `${this.hostname}/${this.resource}/${id}`;
     const token: string = localStorage.getItem('timetable-token');
@@ -33,12 +24,24 @@ export class AccountService {
     return this.httpClient.get<Account>(url, options);
   }
 
-  getAdminAccounts(): Observable<Account[]> {
-    const url: string = `${this.hostname}/${this.resource}/admins`;
+  getAccounts(): Observable<Account[]> {
+    const url: string = `${this.hostname}/${this.resource}`;
     const token: string = localStorage.getItem('timetable-token');
     const options = {
       headers: new HttpHeaders({'Authorization': `Bearer ${token}`})
     };
     return this.httpClient.get<Account[]>(url, options);
+  }
+
+  changeAdminStatus(id: string, newIsAdmin: boolean): Observable<Account> {
+    const url: string = `${this.hostname}/${this.resource}/${id}`;
+    const token: string = localStorage.getItem('timetable-token');
+    const options = {
+      headers: new HttpHeaders({'Authorization': `Bearer ${token}`})
+    };
+    const body: any = {
+      isAdmin: newIsAdmin
+    };
+    return this.httpClient.post<Account>(url, body, options);
   }
 }

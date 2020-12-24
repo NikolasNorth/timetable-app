@@ -1,8 +1,18 @@
 <h1>Admin</h1>
-<h3>Accounts with site manager privileges:</h3>
+<h3>Admin Accounts:</h3>
 <a>Add New</a>
 <ul>
-  <li *ngFor="let admin of adminAccounts">{{admin.name}} {{admin.email}}</li>
+  <li *ngFor="let admin of adminAccounts">
+    <p>{{admin.name}} {{admin.email}}</p>
+    <button (click)="removeAdmin(admin._id)">Remove admin</button>
+  </li>
+</ul>
+<h3>Non-Admin Accounts:</h3>
+<ul>
+  <li *ngFor="let nonAdmin of nonAdminAccounts">
+    <p>{{nonAdmin.name}} {{nonAdmin.email}}</p>
+    <button (click)="createAdmin(nonAdmin._id)">Make admin</button>
+  </li>
 </ul>
 <a routerLink="/admin/manage-reviews">Manage Course Reviews</a>
 <a routerLink="/admin/manage-accounts">Manage User Accounts</a>

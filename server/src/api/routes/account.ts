@@ -5,9 +5,9 @@ import {Account, IAccount} from '../models/account';
 export const router = Router();
 
 
-router.get('/admins', authenticate('jwt', {session: false}), async (req: Request, res: Response) => {
+router.get('/', authenticate('jwt', {session: false}), async (req: Request, res: Response) => {
     try {
-        const accounts: IAccount[] = await Account.find({isAdmin: true}).exec();
+        const accounts: IAccount[] = await Account.find({}).exec();
         res.status(200).json(accounts);
     } catch (e) {
         console.error(e);
@@ -39,3 +39,29 @@ router.get('/:id', authenticate('jwt', {session: false}), async (req: Request, r
         });
     }
 });
+
+router.post('/:id', async (req: Request, res: Response) => {
+    const id: string | null = req.params.id;
+    try {
+        let account: IAccount | null = await Account.findById(id).exec();
+        if (!account) {
+            res.status(404).json({
+                message: 'Account does not exist.',
+            });
+        } else {
+            account.isAdmin = req.body.isAdmin;
+            account = await account.save();
+            res.status(201).json({
+                _id: account._id,
+                name: account.name,
+                email: account.email,
+                isAdmin: account.isAdmin,
+                numSchedules: account.numSchedules,
+                schedules: account.schedules,
+            });
+        }
+    } catch (e) {
+        console.error(e);
+        res.status(500).json(e);
+    }
+})
