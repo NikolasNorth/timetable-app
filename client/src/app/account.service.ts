@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {Account} from './@types/account';
 import {Observable} from 'rxjs';
 
@@ -31,5 +31,20 @@ export class AccountService {
       headers: new HttpHeaders({'Authorization': `Bearer ${token}`})
     };
     return this.httpClient.get<Account>(url, options);
+  }
+
+  isAdminAccount(id: string): boolean {
+    let isAdmin: boolean;
+    this.getAccount(id).subscribe(
+      (account: Account) => {
+        isAdmin = account.isAdmin
+      },
+      (e: HttpErrorResponse) => {
+        console.error(e);
+        isAdmin = false;
+      }
+    );
+    console.log(isAdmin);
+    return isAdmin;
   }
 }

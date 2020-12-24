@@ -24,6 +24,7 @@ import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.componen
 import { DmcaPolicyComponent } from './dmca-policy/dmca-policy.component';
 import { AcceptableUsePolicyComponent } from './acceptable-use-policy/acceptable-use-policy.component';
 import { SecurityPolicyComponent } from './security-policy/security-policy.component';
+import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { SecurityPolicyComponent } from './security-policy/security-policy.compo
     DmcaPolicyComponent,
     AcceptableUsePolicyComponent,
     SecurityPolicyComponent,
+    AdminComponent,
   ],
     imports: [
         BrowserModule,

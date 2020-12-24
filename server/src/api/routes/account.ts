@@ -17,6 +17,7 @@ router.get('/:id', authenticate('jwt', {session: false}), async (req: Request, r
                 _id: account._id,
                 name: account.name,
                 email: account.email,
+                isAdmin: account.isAdmin,
                 numSchedules: account.numSchedules,
                 schedules: account.schedules,
             });

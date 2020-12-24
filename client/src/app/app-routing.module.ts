@@ -17,6 +17,7 @@ import {PrivacyPolicyComponent} from './privacy-policy/privacy-policy.component'
 import {DmcaPolicyComponent} from './dmca-policy/dmca-policy.component';
 import {AcceptableUsePolicyComponent} from './acceptable-use-policy/acceptable-use-policy.component';
 import {SecurityPolicyComponent} from './security-policy/security-policy.component';
+import {AdminComponent} from './admin/admin.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -35,6 +36,7 @@ const routes: Routes = [
   {path: 'dmca', component: DmcaPolicyComponent},
   {path: 'acceptable-use', component: AcceptableUsePolicyComponent},
   {path: 'security', component: SecurityPolicyComponent},
+  {path: 'admin', component: AdminComponent},
   {path: '**', component: Err404Component},
 ]
 
