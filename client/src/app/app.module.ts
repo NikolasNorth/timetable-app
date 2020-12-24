@@ -25,6 +25,8 @@ import { DmcaPolicyComponent } from './dmca-policy/dmca-policy.component';
 import { AcceptableUsePolicyComponent } from './acceptable-use-policy/acceptable-use-policy.component';
 import { SecurityPolicyComponent } from './security-policy/security-policy.component';
 import { AdminComponent } from './admin/admin.component';
+import { ManageAccountsComponent } from './manage-accounts/manage-accounts.component';
+import { ManageReviewsComponent } from './manage-reviews/manage-reviews.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +51,8 @@ import { AdminComponent } from './admin/admin.component';
     AcceptableUsePolicyComponent,
     SecurityPolicyComponent,
     AdminComponent,
+    ManageAccountsComponent,
+    ManageReviewsComponent,
   ],
     imports: [
         BrowserModule,

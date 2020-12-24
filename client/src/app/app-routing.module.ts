@@ -18,6 +18,8 @@ import {DmcaPolicyComponent} from './dmca-policy/dmca-policy.component';
 import {AcceptableUsePolicyComponent} from './acceptable-use-policy/acceptable-use-policy.component';
 import {SecurityPolicyComponent} from './security-policy/security-policy.component';
 import {AdminComponent} from './admin/admin.component';
+import {ManageAccountsComponent} from './manage-accounts/manage-accounts.component';
+import {ManageReviewsComponent} from './manage-reviews/manage-reviews.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -37,6 +39,8 @@ const routes: Routes = [
   {path: 'acceptable-use', component: AcceptableUsePolicyComponent},
   {path: 'security', component: SecurityPolicyComponent},
   {path: 'admin', component: AdminComponent},
+  {path: 'admin/manage-accounts', component: ManageAccountsComponent},
+  {path: 'admin/manage-reviews', component: ManageReviewsComponent},
   {path: '**', component: Err404Component},
 ]
 
