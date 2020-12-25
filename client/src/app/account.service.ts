@@ -33,6 +33,19 @@ export class AccountService {
     return this.httpClient.get<Account[]>(url, options);
   }
 
+  searchAccounts(name: string, email: string): Observable<Account[]> {
+    const url: string = `${this.hostname}/${this.resource}`;
+    const token: string = localStorage.getItem('timetable-token');
+    const options = {
+      headers: new HttpHeaders({'Authorization': `Bearer ${token}`})
+    };
+    const body: any = {
+      name: name,
+      email: email
+    };
+    return this.httpClient.post<Account[]>(url, body, options);
+  }
+
   changeAdminStatus(id: string, newIsAdmin: boolean): Observable<Account> {
     const url: string = `${this.hostname}/${this.resource}/${id}`;
     const token: string = localStorage.getItem('timetable-token');
@@ -41,6 +54,18 @@ export class AccountService {
     };
     const body: any = {
       isAdmin: newIsAdmin
+    };
+    return this.httpClient.post<Account>(url, body, options);
+  }
+
+  changeActiveStatus(id: string, newIsActive: boolean): Observable<Account> {
+    const url: string = `${this.hostname}/${this.resource}/${id}`;
+    const token: string = localStorage.getItem('timetable-token');
+    const options = {
+      headers: new HttpHeaders({'Authorization': `Bearer ${token}`})
+    };
+    const body: any = {
+      isActive: newIsActive
     };
     return this.httpClient.post<Account>(url, body, options);
   }

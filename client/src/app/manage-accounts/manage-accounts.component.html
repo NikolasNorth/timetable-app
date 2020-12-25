@@ -1,1 +1,20 @@
-<p>manage-accounts works!</p>
+<h1>Manage User Accounts</h1>
+<h3>Search</h3>
+<label for="manage-accounts-name">Name</label>
+<input #name type="text" id="manage-accounts-name">
+<label for="manage-accounts-email">Email</label>
+<input #email type="email" id="manage-accounts-email">
+<button (click)="
+searchAccounts(name.value, email.value);
+name.value = '';
+email.value = '';
+">Search</button>
+<div *ngIf="searchResults.length > 0">
+  <ul>
+    <li *ngFor="let account of searchResults">
+      <p>{{account.name}}</p>
+      <button *ngIf="!account.isActive" (click)="activateAccount(account._id)">Activate</button>
+      <button *ngIf="account.isActive" (click)="deactivateAccount(account._id)">Deactivate</button>
+    </li>
+  </ul>
+</div>

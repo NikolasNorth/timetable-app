@@ -40,6 +40,22 @@ router.get('/:id', authenticate('jwt', {session: false}), async (req: Request, r
     }
 });
 
+router.post('/', async (req: Request, res: Response) => {
+    try {
+        const query: any = {};
+        if (req.body.name) query.name = {
+            $regex: req.body.name,
+            $options: 'i'
+        }
+        if (req.body.email) query.email = req.body.email;
+        const results: IAccount[] = await Account.find(query).exec();
+        res.status(200).json(results);
+    } catch (e) {
+        console.error(e);
+        res.status(500).json(e);
+    }
+})
+
 router.post('/:id', async (req: Request, res: Response) => {
     const id: string | null = req.params.id;
     try {
@@ -49,12 +65,14 @@ router.post('/:id', async (req: Request, res: Response) => {
                 message: 'Account does not exist.',
             });
         } else {
-            account.isAdmin = req.body.isAdmin;
+            if (req.body.isAdmin !== undefined) account.isAdmin = req.body.isAdmin;
+            if (req.body.isActive !== undefined) account.isActive = req.body.isActive;
             account = await account.save();
             res.status(201).json({
                 _id: account._id,
                 name: account.name,
                 email: account.email,
+                isActive: account.isActive,
                 isAdmin: account.isAdmin,
                 numSchedules: account.numSchedules,
                 schedules: account.schedules,
