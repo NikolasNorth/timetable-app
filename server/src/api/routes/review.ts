@@ -5,6 +5,41 @@ import { authenticate } from 'passport';
 
 export const router = Router();
 
+router.post('/', async (req: Request, res: Response) => {
+    try {
+        const query: any = {};
+        if (req.body.title) query.title = {
+            $regex: req.body.title,
+            $options: 'i'
+        };
+        if (req.body.courseId) query.courseId = req.body.courseId;
+        if (req.body.authorId) query.authorId = req.body.authorId;
+        const results: IReview[] = await Review.find(query).exec();
+        res.status(200).json(results);
+    } catch (e) {
+        console.error(e);
+        res.status(500).json(e);
+    }
+});
+
+router.post('/:id', async (req: Request, res: Response) => {
+    try {
+        let review: IReview | null = await Review.findById(req.params.id).exec();
+        if (review) {
+            review.isVisible = req.body.isVisible;
+            review = await review.save();
+            res.status(201).json(review);
+        } else {
+            res.status(404).json({
+                message: 'Review not found.'
+            });
+        }
+    } catch (e) {
+        console.error(e);
+        res.status(500).json(e);
+    }
+})
+
 router.get('/course/:id', async (req: Request, res: Response) => {
     try {
         const course: ICourse | null = await Course.findById(req.params.id).exec();
@@ -19,7 +54,7 @@ router.get('/course/:id', async (req: Request, res: Response) => {
         console.error(e);
         res.status(500).json(e);
     }
-})
+});
 
 router.post('/course/:id', authenticate('jwt', {session: false}), async (req: Request, res: Response) => {
     try {

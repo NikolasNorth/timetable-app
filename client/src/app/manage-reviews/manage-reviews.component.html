@@ -1,1 +1,21 @@
-<p>manage-reviews works!</p>
+<h1>Manage Course Reviews</h1>
+<h3>Search</h3>
+<label for="manage-review-title">Title</label>
+<input #title type="text" id="manage-review-title">
+<label for="manage-review-author-id">Author ID</label>
+<input #authorId type="text" id="manage-review-author-id">
+<label for="manage-review-course-id">Course ID</label>
+<input #courseId type="text" id="manage-review-course-id">
+<button (click)="
+searchReviews(title.value, authorId.value, courseId.value);
+title.value = ''; authorId.value = ''; courseId.value = '';
+">Search</button>
+<div *ngIf="searchResults.length > 0">
+  <ul>
+    <li *ngFor="let review of searchResults">
+      <p>{{review.title}}</p>
+      <button *ngIf="review.isVisible" (click)="hideReview(review._id)">Hide</button>
+      <button *ngIf="!review.isVisible" (click)="showReview(review._id)">Show</button>
+    </li>
+  </ul>
+</div>

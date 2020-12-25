@@ -26,4 +26,30 @@ export class ReviewService {
     const url: string = `${this.hostname}/${this.resource}/course/${id}`;
     return this.httpClient.get<Review[]>(url);
   }
+
+  searchReviews(title: string, authorId: string, courseId: string): Observable<Review[]> {
+    const url: string = `${this.hostname}/${this.resource}`;
+    const token: string = localStorage.getItem('timetable-token');
+    const options = {
+      headers: new HttpHeaders({'Authorization': `Bearer ${token}`})
+    };
+    const body: any = {
+      title: title,
+      authorId: authorId,
+      courseId: courseId
+    };
+    return this.httpClient.post<Review[]>(url, body, options);
+  }
+
+  changeReviewVisibility(id: string, newIsVisible): Observable<Review> {
+    const url: string = `${this.hostname}/${this.resource}/${id}`;
+    const token: string = localStorage.getItem('timetable-token');
+    const options = {
+      headers: new HttpHeaders({'Authorization': `Bearer ${token}`})
+    };
+    const body: any = {
+      isVisible: newIsVisible
+    };
+    return this.httpClient.post<Review>(url, body, options);
+  }
 }
