@@ -115,4 +115,9 @@ export class AuthService {
     const url: string = `${this.hostname}/${this.resource}/password-reset`;
     return this.httpClient.post<any>(url, reqBody, this.httpOptions);
   }
+
+  resendVerificationLink(id: string): Observable<any> {
+    const url: string = `${this.hostname}/${this.resource}/resend-verification/${id}`;
+    return this.httpClient.get(url);
+  }
 }

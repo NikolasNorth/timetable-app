@@ -99,6 +99,7 @@ router.post('/signin', async (req: Request, res: Response) => {
             } else if (!account.isConfirmed) {
                 res.status(401).json({
                     success: false,
+                    id: account._id,
                     message: `Invalid email, password, or account has not been confirmed.`,
                 });
             } else if (!account.isActive) {
@@ -202,3 +203,18 @@ router.post('/password-reset', async (req: Request, res: Response) => {
         });
     }
 });
+
+router.get('/resend-verification/:id', async (req: Request, res: Response) => {
+    const id: string = req.params.id;
+    const account: IAccount|null = await Account.findById(id).exec()
+    if (account) {
+        utils.sendConfirmationEmail(account);
+        res.status(200).json({
+            message: 'Verification email sent.'
+        });
+    } else {
+        res.status(404).json({
+            message: 'Account does not exist.'
+        })
+    }
+})

@@ -1,6 +1,12 @@
 <div *ngIf="showErrorMsg">
   <h3>{{errorMsg}}</h3>
 </div>
+<div *ngIf="showVerificationLink">
+  <h4><a (click)="resendVerificationLink()">Resend verification link.</a></h4>
+</div>
+<div *ngIf="showVerificationMsg">
+  <h4>Verification Email sent. Check your inbox.</h4>
+</div>
 <h1>Western Timetable</h1>
 <h3>Sign In</h3>
 <div class="signin-form-container">
