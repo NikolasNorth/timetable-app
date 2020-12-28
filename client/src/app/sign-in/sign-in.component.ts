@@ -47,6 +47,9 @@ export class SignInComponent implements OnInit {
     } else if (password === '') {
       this.errorMsg = 'Please enter password';
       this.showErrorMsg = true;
+    } else if (!this.validateEmail(email)) {
+      this.errorMsg = 'Please enter valid email.';
+      this.showErrorMsg = true;
     } else {
       const account: Object = {
         email: email,
@@ -80,5 +83,11 @@ export class SignInComponent implements OnInit {
         console.error(e);
       }
     )
+  }
+
+  validateEmail(email: string): boolean {
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    console.log(re.test(String(email).toLowerCase()))
+    return re.test(String(email).toLowerCase());
   }
 }

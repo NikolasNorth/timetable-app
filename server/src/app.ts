@@ -24,8 +24,8 @@ export const transporter = nodemailer.createTransport({
     }
 });
 
-const dbUrl: string = `mongodb://127.0.0.1:27017/${Config.db.name}`
-// const dbUrl = `mongodb+srv://${Config.db.user}:${Config.db.password}@timetable-api.xmw9o.mongodb.net/${Config.db.name}?retryWrites=true&w=majority`;
+// const dbUrl: string = `mongodb://127.0.0.1:27017/${Config.db.name}`
+const dbUrl = `mongodb+srv://${Config.db.user}:${Config.db.password}@timetable-api.xmw9o.mongodb.net/${Config.db.name}?retryWrites=true&w=majority`;
 const dbOptions: ConnectionOptions = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
