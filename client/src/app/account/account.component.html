@@ -6,7 +6,8 @@
     <h2>Account Information</h2>
     <p><b>Name:</b> {{account.name}}</p>
     <p><b>Email:</b> {{account.email}}</p>
-    <a routerLink="/request-password-reset">Change Password</a>
+    <a routerLink="/request-password-reset">Change Password</a><br>
+    <a *ngIf="account.isAdmin" routerLink="/admin">Admin Panel</a>
   </div>
   <div class="account-schedules-list">
     <h2>My Schedules ({{account.numSchedules}}) | </h2><a routerLink="/schedules/create">Create New</a>

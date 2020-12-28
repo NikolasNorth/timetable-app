@@ -31,7 +31,6 @@ export class AccountComponent implements OnInit {
     if (this.authService.isSignedIn()) {
       this.getAccount(id);
     } else {
-      console.log('Navigate back')
       this.router.navigate(['signin']);
     }
   }
