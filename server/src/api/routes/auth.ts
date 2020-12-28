@@ -105,7 +105,7 @@ router.post('/signin', async (req: Request, res: Response) => {
             } else if (!account.isActive) {
                 res.status(401).json({
                     success: false,
-                    message: `Account has been deactivated. Contact administrator.`,
+                    message: `Account has been deactivated. Contact administrator at noreply.westernusc.timeline@gmail.com`,
                 })
             } else {
                 const token: string = utils.issueJwt(account);
