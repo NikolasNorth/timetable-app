@@ -105,7 +105,7 @@ router.post('/signin', async (req: Request, res: Response) => {
             } else if (!account.isActive) {
                 res.status(401).json({
                     success: false,
-                    message: `Account has been deactivated.`,
+                    message: `Account has been deactivated. Contact administrator.`,
                 })
             } else {
                 const token: string = utils.issueJwt(account);
