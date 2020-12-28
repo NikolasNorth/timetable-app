@@ -42,9 +42,10 @@ router.post('/:id', async (req: Request, res: Response) => {
 
 router.get('/course/:id', async (req: Request, res: Response) => {
     try {
-        const course: ICourse | null = await Course.findById(req.params.id).exec();
-        if (course) {
-            res.status(200).json(course.reviews);
+        const reviews = await Review.find({courseId: req.params.id}).exec();
+        if (reviews) {
+            const visibleReviews = reviews.filter((r) => r.isVisible);
+            res.status(200).json(visibleReviews);
         } else {
             res.status(404).json({
                 message: 'Course not found.'

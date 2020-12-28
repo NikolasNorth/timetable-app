@@ -36,7 +36,10 @@ export class CourseDetailComponent implements OnInit {
     this.accountId = this.authService.getId();
     const courseId: string = this.activatedRoute.snapshot.paramMap.get('id');
     this.courseService.getCourse(courseId).subscribe(
-      (course: Course) => this.course = course,
+      (course: Course) => {
+        this.course = course;
+        this.getReviews();
+      },
       (err: HttpErrorResponse) => this.showErrorMsg = true,
     );
   }
