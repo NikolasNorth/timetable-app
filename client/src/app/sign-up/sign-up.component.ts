@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Account} from '../@types/account';
 import {AuthService} from '../auth.service';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-sign-up',
@@ -9,11 +10,14 @@ import {AuthService} from '../auth.service';
 })
 export class SignUpComponent implements OnInit {
   showVerificationMsg: boolean;
+  public showErrorMsg;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) {
+  }
 
   ngOnInit(): void {
     this.showVerificationMsg = false;
+    this.showErrorMsg = false;
   }
 
   /**
@@ -33,10 +37,14 @@ export class SignUpComponent implements OnInit {
       password: password,
     };
     this.authService.signUpAccount(account as Account)
-      .subscribe((newAccount: Account) => {
-        if (newAccount) {
-          this.showVerificationMsg = true;
-        }
-      });
+      .subscribe(
+        (newAccount: Account) => {
+          if (newAccount) {
+            this.showVerificationMsg = true;
+          }
+        },
+        (e: HttpErrorResponse) => {
+          this.showErrorMsg = true;
+        });
   }
 }
