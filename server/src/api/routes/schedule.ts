@@ -58,7 +58,7 @@ router.post('/', authenticate('jwt', {session: false}), async (req: Request, res
                 const isPrivate: boolean = req.body.isPrivate;
                 const lastModified: number = Date.now();
                 const authorId: string = req.body.authorId;
-                const courses: any = req.body.courses || [];  // FIXME: Why any here to prevent typescript error in new Schedule below?
+                const courses: any = req.body.courses || [];
                 const schedule: ISchedule = await Schedule.create({
                     name: name,
                     description: desc,

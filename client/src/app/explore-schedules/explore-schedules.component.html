@@ -4,7 +4,7 @@
     <li *ngFor="let schedule of schedules">
       <h3>Name: {{schedule.name}} ({{schedule.courses.length}})</h3>
       <p><b>Created By:</b> {{schedule.authorId}}</p>
-      <p><b>Last Modified:</b> {{schedule.lastModified}}</p>
+      <p><b>Last Modified:</b> {{schedule.lastModified | date}}</p>
       <h4>Description</h4>
       <p>{{schedule.description}}</p>
       <h4>Courses</h4>
