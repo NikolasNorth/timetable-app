@@ -41,26 +41,34 @@ export class SignInComponent implements OnInit {
    * @return void
    */
   signIn(email: string, password: string): void {
-    const account: Object = {
-      email: email,
-      password: password,
-    };
-    this.authService.signInAccount(account as Account)
-      .subscribe(
-        (res: any) => {
-          this.authService.addToLocalStorage(res);
-          this.router.navigate(['account']);
-        },
-        (err: HttpErrorResponse) => {
-          if (err.error.id) {
-            this.showVerificationLink = true;
-            this.accountId = err.error.id;
+    if (email === '') {
+      this.errorMsg = 'Please enter email';
+      this.showErrorMsg = true;
+    } else if (password === '') {
+      this.errorMsg = 'Please enter password';
+      this.showErrorMsg = true;
+    } else {
+      const account: Object = {
+        email: email,
+        password: password,
+      };
+      this.authService.signInAccount(account as Account)
+        .subscribe(
+          (res: any) => {
+            this.authService.addToLocalStorage(res);
+            this.router.navigate(['account']);
+          },
+          (err: HttpErrorResponse) => {
+            if (err.error.id) {
+              this.showVerificationLink = true;
+              this.accountId = err.error.id;
+            }
+            this.errorMsg = err.error.message;
+            this.showErrorMsg = true;
+            console.error(err);
           }
-          this.errorMsg = err.error.message;
-          this.showErrorMsg = true;
-          console.error(err);
-        }
-      );
+        );
+    }
   }
 
   resendVerificationLink(): void {

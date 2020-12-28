@@ -11,6 +11,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 export class SignUpComponent implements OnInit {
   showVerificationMsg: boolean;
   public showErrorMsg;
+  public errorMsg;
 
   constructor(private authService: AuthService) {
   }
@@ -31,20 +32,36 @@ export class SignUpComponent implements OnInit {
    * @return void
    */
   signUp(name: string, email: string, password: string, confirmPassword: string): void {
-    const account: Object = {
-      name: name,
-      email: email,
-      password: password,
-    };
-    this.authService.signUpAccount(account as Account)
-      .subscribe(
-        (newAccount: Account) => {
-          if (newAccount) {
-            this.showVerificationMsg = true;
-          }
-        },
-        (e: HttpErrorResponse) => {
-          this.showErrorMsg = true;
-        });
+    if (name === '') {
+      this.errorMsg = 'Please enter name';
+      this.showErrorMsg = true;
+    } else if (email === '') {
+      this.errorMsg = 'Please enter email';
+      this.showErrorMsg = true;
+    } else if (password === '') {
+      this.errorMsg = 'Please enter password';
+      this.showErrorMsg = true;
+    } else if (confirmPassword === '') {
+      this.errorMsg = 'Please enter confirm password';
+      this.showErrorMsg = true;
+    }
+    else {
+      const account: Object = {
+        name: name,
+        email: email,
+        password: password,
+      };
+      this.authService.signUpAccount(account as Account)
+        .subscribe(
+          (newAccount: Account) => {
+            if (newAccount) {
+              this.showVerificationMsg = true;
+            }
+          },
+          (e: HttpErrorResponse) => {
+            this.errorMsg = 'An account has already been created for that email.'
+            this.showErrorMsg = true;
+          });
+    }
   }
 }
