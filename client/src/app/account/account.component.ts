@@ -36,18 +36,20 @@ export class AccountComponent implements OnInit {
   }
 
   deleteSchedule(id: string): void {
-    this.scheduleService.deleteSchedule(id).subscribe(
-      (res: any) => {
-        this.flashMsg = 'Schedule deleted.'
-        this.showFlashMsg = true;
-        this.getAccount(this.account._id);
-      },
-      (err: HttpErrorResponse) => {
-        console.error(err);
-        this.flashMsg = err.error.message;
-        this.showFlashMsg = true;
-      }
-    )
+    if (confirm("Are you sure you want to delete?")) {
+      this.scheduleService.deleteSchedule(id).subscribe(
+        (res: any) => {
+          this.flashMsg = 'Schedule deleted.'
+          this.showFlashMsg = true;
+          this.getAccount(this.account._id);
+        },
+        (err: HttpErrorResponse) => {
+          console.error(err);
+          this.flashMsg = err.error.message;
+          this.showFlashMsg = true;
+        }
+      )
+    }
   }
 
   getAccount(id: string): void {
